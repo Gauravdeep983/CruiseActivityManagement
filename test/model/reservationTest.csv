@@ -1,0 +1,7 @@
+1,16,Movie 2,50,Deck 3,120,SHOW,10/8/20 0:00,10/8/20 15:00,10/8/20 17:00,Jose,31,jeevesh,Jeevesh@123,Please correct the following errors,You cannot reserve more than 1 show event per day,
+2,31,Go Karting,20,Deck 12,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,Cindy,4,jeevesh,Jeevesh@123,Please correct the following errors,You cannot reserve more than 2 athletic events per day,
+3,31,Go Karting,20,Deck 12,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,Cindy,4,yahoo,Yahoo@123,,,
+4,16,Movie 2,50,Deck 3,120,SHOW,10/8/20 0:00,10/8/20 15:00,10/8/20 17:00,Jose,31,yahoo,Yahoo@123,,,
+5,27,Ice Skating,35,Deck 9,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,Ken,19,yahoo,Yahoo@123,,,
+6,4,Bowling 1,3,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,jyotir,4,jeevesh,Jeevesh@123,Please correct the following errors,You cannot reserve more than 2 athletic events per day,Event capacity exceeded
+7,4,Bowling 1,3,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,jyotir,4,yahoo,Yahoo@123,Please correct the following errors,,Event capacity exceeded

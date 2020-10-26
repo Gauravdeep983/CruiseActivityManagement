@@ -1,0 +1,16 @@
+2,davi,David@123,Please correct the following errors,Username length must be > 4 and < 20 characters.,
+3,daviddaviddaviddavi,David@123,,,
+4,daviddaviddaviddavid,David@123,Please correct the following errors,Username length must be > 4 and < 20 characters.,
+5,polish,David@123,,,
+6,1david,David@123,Please correct the following errors,Username must start with a letter,
+7,dav@id,David@123,Please correct the following errors,Username cannot contain special characters,
+8,,David@123,Please correct the following errors,Username cannot be empty,
+9,polish,D@123,Please correct the following errors,,Password length must be >7 and <30
+10,polish,Dfghjklzxcvbnmqwertyuiopasdfgh,Please correct the following errors,,Password length must be >7 and <30
+11,polish,abcdef_123,Please correct the following errors,,Password must contain an upper case letter
+12,polish,ABCDEF_123,Please correct the following errors,,Password must contain a lower case letter
+13,polish,ABCDE_abcde,Please correct the following errors,,Password must contain a number
+14,polish,ABCabc123,Please correct the following errors,,Password must contain a special character
+15,polish,,Please correct the following errors,,Password cannot be empty
+16,polish,Abcd_123,,,
+17,polish,Aqwertyuiopasdfghjklzxcvb_123,,,

@@ -23,7 +23,9 @@ public class UserErrors {
 	}
 	
 	public void setErrorMsg() {
-		if (!usernameError.equals("") || !passwordError.equals("") || !firstNameError.equals("") || !lastNameError.equals("") || !phoneError.equals("") || !emailError.equals("") || !roomNumberError.equals("") || !deckNumberError.equals("") || !membershipTypeError.equals("") || !roleError.equals("")) 
+		if (!usernameError.equals("") || !passwordError.equals("") || !firstNameError.equals("") || 
+				!lastNameError.equals("") || !phoneError.equals("") || !emailError.equals("") || 
+				!roomNumberError.equals("") || !deckNumberError.equals("") || !membershipTypeError.equals("") || !roleError.equals("")) 
 			errorMsg = "Please correct the following errors";		
 	}
 	

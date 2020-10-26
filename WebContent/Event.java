@@ -7,12 +7,12 @@ import java.util.Date;
 
 import CruiseActivityManagement.data.EventDAO;
 import CruiseActivityManagement.data.UserDAO;
- 
-public class Event implements java.io.Serializable {
+
+public class Event implements java.io.Serializable  {
 	private static final long serialVersionUID = 1L;
-	private int id; // PK in 'event' table,
-	private String event_name;
-	private String capacity;
+	private int id; // PK in 'event' table, 
+	private String event_name; // PK in 'all_events' table, FK in 'event' table
+	private int capacity;
 	private String location;
 	private int duration;
 	private String type;
@@ -20,10 +20,9 @@ public class Event implements java.io.Serializable {
 	private String startTime;
 	private String endTime;
 	private String eventCoordinator; // FK from 'user'
-	private String estAttendance;
-
-	public void setEvent(int id, String event_name, String capacity, String location, int duration, String type,
-			String date, String startTime, String endTime, String eventCoordinator, String estAttendance) {
+	private int estAttendance;
+	
+	public void setEvent (int id, String event_name, int capacity, String location, int duration, String type, String date,  String startTime, String endTime, String eventCoordinator, int estAttendance) {
 		setId(id);
 		setEvent_name(event_name);
 		setCapacity(capacity);
@@ -38,57 +37,17 @@ public class Event implements java.io.Serializable {
 	}
 
 	public void validateReservation(Event event, User user, EventErrors eventErrors) {
-		eventErrors.setTypeError(
-				validateMaxReservationLimit(user.getUsername(), event.getId(), event.getDate(), event.getType()));
-		eventErrors.setCapacityError(validateEventCapacity(user.getUsername(), event.getCapacity(), event.getId()));
+		eventErrors.setTypeError(validateMaxReservationLimit(user.getUsername(), event.getId(), event.getDate(), event.getType()));
+		eventErrors.setCapacityError(validateEventCapacity(user.getUsername(), event.getCapacity(), event.getId()));	
 		eventErrors.setErrorMsg();
 	}
-
+	
 	public void validateDate(EventErrors eventErrors, String date, String time) {
 		eventErrors.setDateError(validatePastDate(date));
 		eventErrors.setStartTimeError(validatePastTime(time));
 		eventErrors.setErrorMsg();
 	}
-
-	public void validateUpdateEvent(Event event, EventErrors eventErrors) {
-		eventErrors.setEstAttendanceError(validateEstAttendees(event.getEstAttendance()));
-		eventErrors.setEventCoordinatorError(
-				validateAvailableCoordinator(event.getEventCoordinator(), event.getStartTime(), event.getEndTime()));
-//		eventErrors.setDateError(validatePastDate(event.getDate()));
-//		eventErrors.setStartTimeError(validatePastTime(event.getStartTime()));
-//		eventErrors.setEndTimeError(validatePastTime(event.getEndTime()));
-		eventErrors.setDurationError(validateExceedingDuration(event.getEndTime()));
-		eventErrors.setErrorMsg();
-	}
-
-	private String validateExceedingDuration(String endTime) {
-		String result = "";
-		String startTime = endTime.substring(8);
-		String closeTime = "22:00";
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		Date d1 = null, d2 = null;
-		try {
-			d1 = sdf.parse(startTime);
-			d2 = sdf.parse(closeTime);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		long difference = d2.getTime() - d1.getTime();
-		if (difference < 0) {
-			result = "Duration cannot exceed close time";
-		}
-		return result;
-	}
-
-	private String validateAvailableCoordinator(String eventCoordinator, String startTime, String endTime) {
-		String result = "";
-		boolean isAvailable = EventDAO.availableCoordinator(startTime, endTime, eventCoordinator);
-		if (!isAvailable) {
-			result = eventCoordinator + " is not available at that time";
-		}
-		return result;
-	}
-
+	
 	private String validatePastTime(String time) {
 		String result = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy hh:mm");
@@ -101,10 +60,10 @@ public class Event implements java.io.Serializable {
 				result = "";
 			}
 		} catch (ParseException e) {
-
+			
 			e.printStackTrace();
 		}
-
+		
 		return result;
 	}
 
@@ -120,9 +79,9 @@ public class Event implements java.io.Serializable {
 			} else {
 				result = "";
 			}
-		} catch (ParseException e) {
+		} catch (ParseException e) {			
 			e.printStackTrace();
-		}
+		}		
 		return result;
 	}
 
@@ -134,7 +93,7 @@ public class Event implements java.io.Serializable {
 		for (Event event : events) {
 			if (event.getType().equalsIgnoreCase("ATHLETIC")) {
 				athleticCount++;
-			} else {
+			} else if (event.getType().equalsIgnoreCase("SHOW")) {
 				showCount++;
 			}
 		}
@@ -143,7 +102,7 @@ public class Event implements java.io.Serializable {
 			athleticCount++;
 		} else {
 			showCount++;
-		}
+		}		
 		// validation check
 		if (athleticCount >= 3) {
 			result = "You cannot reserve more than 2 athletic events per day";
@@ -152,29 +111,30 @@ public class Event implements java.io.Serializable {
 		}
 		return result;
 	}
-
-	private String validateEventCapacity(String username, String capacity, int event_id) {
+	
+	private String validateEventCapacity(String username, int capacity, int event_id) {
 		String result = "";
 		ArrayList<User> participants = UserDAO.listParticipantsInEvent(event_id);
 		// Validation check
-		if (participants.size() + 1 > Integer.parseInt(capacity)) {
+		if (participants.size() + 1 > capacity) {
 			result = "Event capacity exceeded";
-		}
+		}		
 		return result;
 	}
-
-	private String validateEstAttendees(String estAttendees) {
+	
+	private String validateEstAttendees(int estAttendees) {
 		String result = "";
-		if (!isValidNumber(estAttendees)) {
-			result = "Estimated attendees must be a number";
-		} else if (Integer.parseInt(estAttendees) <= 0) {
+		if (!isValidNumber(Integer.toString(estAttendees))) {
+			result = "Attendance must be numeric";
+		} else if (estAttendees <= 0) {
 			result = "Estimated attendees must be greater than 0";
-		} else if (Integer.parseInt(estAttendees) > 100) {
-			result = "Estimated attendees must be <=100";
+		} else if (estAttendees >= 101) {
+			result = "Estimated attendees must be <=100";					
 		}
 		return result;
 	}
-
+		
+	
 	public int getId() {
 		return id;
 	}
@@ -182,7 +142,6 @@ public class Event implements java.io.Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getEvent_name() {
 		return event_name;
 	}
@@ -191,11 +150,11 @@ public class Event implements java.io.Serializable {
 		this.event_name = event_name;
 	}
 
-	public String getCapacity() {
+	public int getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(String capacity) {
+	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
 
@@ -214,7 +173,7 @@ public class Event implements java.io.Serializable {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-
+	
 	public String getType() {
 		return type;
 	}
@@ -222,6 +181,7 @@ public class Event implements java.io.Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+
 
 	public String getDate() {
 		return date;
@@ -255,21 +215,22 @@ public class Event implements java.io.Serializable {
 		this.eventCoordinator = eventCoordinator;
 	}
 
-	public String getEstAttendance() {
+	public int getEstAttendance() {
 		return estAttendance;
 	}
 
-	public void setEstAttendance(String estAttendance) {
+	public void setEstAttendance(int estAttendance) {
 		this.estAttendance = estAttendance;
 	}
-
+	
 	private boolean isValidNumber(String num) {
 		for (char c : num.toCharArray()) {
-			if (!Character.isDigit(c)) {
-				return false;
-			}
-		}
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
 		return true;
 	}
+
 
 }

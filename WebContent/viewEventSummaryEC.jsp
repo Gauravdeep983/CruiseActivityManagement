@@ -1,17 +1,19 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Created Events</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Event Summary EC</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
 <link href="myStyle.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
 <body>
-<h1>Search Created Events</h1>
-    <label class="errorPane"><c:out value='${error.errorMsg}' /></label>
-	<form method="post"	action="<c:url value='/EventController?action=searchCreatedEvents' /> ">
+<h1>Search Assigned Events</h1>
+	<label class="errorPane"><c:out value='${error.errorMsg}' /></label>
+	<form method="post"	action="<c:url value='/EventController?action=searchAssignedEvents' /> ">
 		<p>
 			Date: <input type="text" id="datepicker" name="datepicker"> <label class="errorPane"><c:out value='${error.dateError}' /></label>
 		</p>
@@ -23,6 +25,7 @@
 	<a href="<c:url value='/UserController?action=homepage' />"> <input
 		type="submit" value="Back"></a>
 	<hr>
+	<h5>Events assigned to ${user.firstName} ${user.lastName}</h5>
 	<table border="1" class="myTable">
 		<tr class="myTableRow">
 			<th class="myTable20">Event Name</th>
@@ -38,12 +41,12 @@
 
 				<td class="myTable20 "><c:out value="${item.event_name}" /></td>
 				<td class="myTable35 "><c:out value="${item.date}" /></td>
-				<td class="myTable20 "><c:out value="${item.startTime.substring(8)}" /></td>
+				<td class="myTable20 "><c:out value="${item.startTime}" /></td>
 				<td class="myTable20 "><c:out value="${item.duration}" /></td>
 				<td class="myTable20 "><c:out value="${item.location}" /></td>
 				<td class="myTable20 "><c:out value="${item.estAttendance}" /></td>
 				<td><a
-					href="<c:url value='/EventController?action=listSpecificEvent&id=${item.id}' />">
+					href="<c:url value='/EventController?action=eventDetails&id=${item.id}' />">
 						Details</a></td>
 			</tr>
 		</c:forEach>
