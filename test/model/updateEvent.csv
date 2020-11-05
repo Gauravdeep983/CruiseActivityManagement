@@ -1,0 +1,9 @@
+1,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 11:00,sophia,15,,,,
+2,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 11:00,alan,15,Please correct the following errors,alan is not available at that time,,
+3,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 11:00,sophia,one,Please correct the following errors,,Estimated attendees must be a number,
+4,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 11:00,sophia,0,Please correct the following errors,,Estimated Attendance must be greater than 0,
+5,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 11:00,sophia,1,,,,
+6,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 11:00,sophia,100,,,,
+7,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 11:00,sophia,101,Please correct the following errors,,Estimated Attendance must be <=100,
+8,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 22:01,sophia,15,Please correct the following errors,,,Duration cannot exceed close time
+9,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/7/20 0:00,10/7/20 10:00,10/7/20 22:00,sophia,15,,,,

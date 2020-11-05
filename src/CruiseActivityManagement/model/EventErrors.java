@@ -2,15 +2,11 @@ package CruiseActivityManagement.model;
 
 public class EventErrors {
 	private String errorMsg = "";
-	private String idError = "";
-	private String eventNameError = "";
 	private String typeError = "";
-	private String locationError = "";
 	private String capacityError = "";
 	private String durationError = "";
 	private String dateError = "";
 	private String startTimeError = "";
-	private String endTimeError = "";
 	private String eventCoordinatorError = "";
 	private String estAttendanceError = "";
 	
@@ -20,9 +16,8 @@ public class EventErrors {
 	} 
 
 	public void setErrorMsg() {
-		if (!idError.equals("") || !eventNameError.equals("") || !typeError.equals("") || !locationError.equals("") ||
-				!capacityError.equals("") || !durationError.equals("") || !dateError.equals("") || 
-				!startTimeError.equals("") || !endTimeError.equals("") || !eventCoordinatorError.equals("") || !estAttendanceError.equals("")) 
+		if (!typeError.equals("") || !capacityError.equals("") || !durationError.equals("") || !dateError.equals("") || 
+				!startTimeError.equals("") || !eventCoordinatorError.equals("") || !estAttendanceError.equals("")) 
 			errorMsg = "Please correct the following errors";		
 	}
 
@@ -36,26 +31,6 @@ public class EventErrors {
 	}
 
 
-	public String getIdError() {
-		return idError;
-	}
-
-
-	public void setIdError(String idError) {
-		this.idError = idError;
-	}
-
-
-	public String getEvent_nameError() {
-		return eventNameError;
-	}
-
-
-	public void setEvent_nameError(String eventNameError) {
-		this.eventNameError = eventNameError;
-	}
-
-
 	public String getTypeError() {
 		return typeError;
 	}
@@ -63,16 +38,6 @@ public class EventErrors {
 
 	public void setTypeError(String typeError) {
 		this.typeError = typeError;
-	}
-
-
-	public String getLocationError() {
-		return locationError;
-	}
-
-
-	public void setLocationError(String locationError) {
-		this.locationError = locationError;
 	}
 
 
@@ -113,16 +78,6 @@ public class EventErrors {
 
 	public void setStartTimeError(String startTimeError) {
 		this.startTimeError = startTimeError;
-	}
-
-
-	public String getEndTimeError() {
-		return endTimeError;
-	}
-
-
-	public void setEndTimeError(String endTimeError) {
-		this.endTimeError = endTimeError;
 	}
 
 

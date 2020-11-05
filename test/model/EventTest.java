@@ -25,10 +25,11 @@ public class EventTest {
 	}
 
 	@Test
-	@FileParameters("test/model/updateEventTest.csv")
-	public void eventUpdateTest(int testcaseNo, int id, String event_name, String capacity, String location, int duration,
-			String type, String date, String startTime, String endTime, String eventCoordinator, String estAttendance,
-			String errorMsg, String eventCoordinatorError, String estAttendanceError, String durationError) {
+	@FileParameters("test/model/updateEvent.csv")
+	public void eventUpdateTest(int testcaseNo, int id, String event_name, String capacity, String location,
+			int duration, String type, String date, String startTime, String endTime, String eventCoordinator,
+			String estAttendance, String errorMsg, String eventCoordinatorError, String estAttendanceError,
+			String durationError) {
 
 		event.setEvent(id, event_name, capacity, location, duration, type, date, startTime, endTime, eventCoordinator,
 				estAttendance);
@@ -57,15 +58,15 @@ public class EventTest {
 		assertTrue(capacityError.equals(eventErrors.getCapacityError()));
 	}
 
-//	@Test
-//	@FileParameters("") 
-//	public void pastDateTest(int testcaseNo, int id, String event_name, int capacity, String location, int duration, String type,
-//			String date, String startTime, String endTime, String eventCoordinator, int estAttendance, String errorMsg, String dateError, String timeError) {
-//		
-//		event.setEvent(id, event_name, capacity, location, duration, type, dateError, startTime, endTime, eventCoordinator, estAttendance);
-//
-//		assertTrue(errorMsg.equals(eventErrors.getErrorMsg()));
-//		assertTrue(dateError.equals(eventErrors.getDateError()));
-//		assertTrue(timeError.equals(eventErrors.getEndTimeError()));
-//	}
+	@Test
+	@FileParameters("test/model/pastValidations.csv")
+	public void pastDateTest(int testcaseNo, String date, String startTime, String errorMsg, String dateError,
+			String timeError) {
+
+		event.validateDate(eventErrors, date, startTime);
+
+		assertTrue(errorMsg.equals(eventErrors.getErrorMsg()));
+		assertTrue(dateError.equals(eventErrors.getDateError()));
+		assertTrue(timeError.equals(eventErrors.getStartTimeError()));
+	}
 }

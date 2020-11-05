@@ -36,7 +36,7 @@ public class Event implements java.io.Serializable {
 		setEventCoordinator(eventCoordinator);
 		setEstAttendance(estAttendance);
 	}
-
+	
 	public void validateReservation(Event event, User user, EventErrors eventErrors) {
 		eventErrors.setTypeError(
 				validateMaxReservationLimit(user.getUsername(), event.getId(), event.getDate(), event.getType()));
@@ -71,7 +71,6 @@ public class Event implements java.io.Serializable {
 			d1 = sdf.parse(startTime);
 			d2 = sdf.parse(closeTime);
 		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 		long difference = d2.getTime() - d1.getTime();
 		if (difference < 0) {
@@ -91,18 +90,16 @@ public class Event implements java.io.Serializable {
 
 	private String validatePastTime(String time) {
 		String result = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy HH:mm");
 		String currentDate = sdf.format(new Date());
 
 		try {
-			if (sdf.parse(time).before(sdf.parse(currentDate))) {
+			if (sdf.parse(currentDate).after(sdf.parse(time))) {
 				result = "Time must not be in past";
 			} else {
 				result = "";
 			}
 		} catch (ParseException e) {
-
-			e.printStackTrace();
 		}
 
 		return result;
@@ -110,18 +107,19 @@ public class Event implements java.io.Serializable {
 
 	private String validatePastDate(String selectedDate) {
 		String result = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy hh:mm");
+//		SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy HH:mm");
 		SimpleDateFormat sdf1 = new SimpleDateFormat("M/d/yy");
 		String currentDate = sdf1.format(new Date());
-		currentDate = currentDate.concat(" 0:00");
+//		currentDate = currentDate.concat(" 0:00");
 		try {
-			if (sdf.parse(selectedDate).before(sdf.parse(currentDate))) {
+			Date selectedDateUpdated = sdf1.parse(selectedDate);
+			selectedDate = sdf1.format(selectedDateUpdated);
+			if (sdf1.parse(selectedDate).before(sdf1.parse(currentDate))) {
 				result = "Date must not be in past";
 			} else {
 				result = "";
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 		return result;
 	}
@@ -168,9 +166,9 @@ public class Event implements java.io.Serializable {
 		if (!isValidNumber(estAttendees)) {
 			result = "Estimated attendees must be a number";
 		} else if (Integer.parseInt(estAttendees) <= 0) {
-			result = "Estimated attendees must be greater than 0";
+			result = "Estimated Attendance must be greater than 0";
 		} else if (Integer.parseInt(estAttendees) > 100) {
-			result = "Estimated attendees must be <=100";
+			result = "Estimated Attendance must be <=100";
 		}
 		return result;
 	}

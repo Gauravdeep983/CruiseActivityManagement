@@ -47,3 +47,5 @@
 47,polish,David@125,David,Rios,9876543215,david@xyz.com,99,12,SUPERIOR,PASSENGER,Please correct the following errors,,,,,,,Room number must have 3 digits,
 48,polish,David@125,David,Rios,9876543215,david@xyz.com,200,12,SUPERIOR,PASSENGER,Please correct the following errors,,,,,,,Room number must be >=100 and <=199,
 49,polish,David@125,David,Rios,9876543215,david@xyz.com,179,12,SUPERIOR,PASSENGER,,,,,,,,,
+50,polish,David@125,David,Rios,9876543215,david@xyz.com,@#$,12,SUPERIOR,PASSENGER,Please correct the following errors,,,,,,,Room number must be numeric,
+51,polish,David@125,David,Rios,9876543215,david@xyz.com,,12,SUPERIOR,PASSENGER,Please correct the following errors,,,,,,,Room number cannot be empty,
