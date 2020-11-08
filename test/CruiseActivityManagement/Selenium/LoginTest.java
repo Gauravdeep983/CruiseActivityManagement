@@ -48,7 +48,7 @@ public class LoginTest extends CAM_BusinessFunctions {
 	}
 
 	@Test
-	@FileParameters("test/CruiseActivityManagement/Selenium/Login.csv")
+	@FileParameters("excel/Login.csv")
 	public void testLogin(String testCaseNo, String username, String password, String errorMsg, String usernameError,
 			String passwordError) throws Exception {
 		// Landing page

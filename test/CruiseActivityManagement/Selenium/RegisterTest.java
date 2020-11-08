@@ -48,7 +48,7 @@ public class RegisterTest extends CAM_BusinessFunctions {
 	}
 
 	@Test
-	@FileParameters("test/CruiseActivityManagement/Selenium/TC02.csv")
+	@FileParameters("excel/TC02.csv")
 	public void testRegisterTC01(String testCaseNo, String username, String password, String firstName, String lastName,
 			String phone, String email, String roomNumber, String deckNumber, String membershipType, String role,
 			String errorMsg, String usernameError, String passwordError, String firstNameError, String lastNameError,

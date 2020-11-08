@@ -7,6 +7,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/sharedUIMap"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/screenShots"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/functions"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/excel"/>
         <property name="context-root" value="CruiseActivityManagement"/>
         <property name="java-output-path" value="/CruiseActivityManagement/build/classes"/>
     </wb-module>

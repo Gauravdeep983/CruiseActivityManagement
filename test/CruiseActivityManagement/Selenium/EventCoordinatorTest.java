@@ -48,7 +48,7 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 	}
 
 	@Test
-	@FileParameters("test/CruiseActivityManagement/Selenium/EC_login_test.csv")
+	@FileParameters("excel/EC_login_test.csv")
 	public void testHomepageRole(int testCaseNumber, String username, String password, String roleExpected, String date,
 			String time, String eventAssignedExpected, String errorMsg, String roleActual, String eventAssignedActual)
 			throws Exception {
@@ -72,7 +72,7 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 	}
 
 	@Test
-	@FileParameters("test/CruiseActivityManagement/Selenium/EC_no_events_assigned.csv")
+	@FileParameters("excel/EC_no_events_assigned.csv")
 	public void testNoEventsAssigned(int testCaseNumber, String username, String password, String roleExpected,
 			String date, String time, String eventAssignedExpected, String errorMsg, String roleActual,
 			String eventAssignedActual) throws Exception {
@@ -102,7 +102,7 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 	}
 
 	@Test
-	@FileParameters("test/CruiseActivityManagement/Selenium/EC_verify_assigned_event.csv")
+	@FileParameters("excel/EC_verify_assigned_event.csv")
 	public void testVerifyAssignedEvent(int testCaseNumber, String username, String password, String roleExpected,
 			String date, String time, String eventAssignedExpected, String errorMsg, String roleActual,
 			String eventAssignedActual) throws Exception {
