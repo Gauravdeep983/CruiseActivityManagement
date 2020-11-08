@@ -43,7 +43,7 @@ public class EventController extends HttpServlet {
 			time = date.concat(" ").concat(time);
 			date = date.concat(" 0:00");
 			// Validate datetime
-			event.validateDate(err, date, time);
+			//event.validateDate(err, date, time);
 			// Fetch all events based on filter
 			ArrayList<Event> EventsInDB = EventDAO.listAllEvents(date, time, eventType);
 			if (err.getErrorMsg().equals("")) {

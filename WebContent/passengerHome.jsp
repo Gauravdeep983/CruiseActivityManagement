@@ -15,7 +15,7 @@
 				<td><h1>Hello ${user.firstName}</h1></td>
 				<td>(Passenger Homepage)</td>
 				<td><a href="<c:url value='/UserController?action=logout' />">
-						<input type="submit" value="Logout">
+						<input type="submit" value="Logout" id="logout">
 				</a></td>
 			</tr>
 			<tr>

@@ -24,10 +24,10 @@
 		<input type="password" value="" name="password">
 		<label class="errorPane"><c:out value='${errorMsgs.passwordError}'/></label>
 		<br><br>
-		<input type="submit" value="Login">	   
+		<input type="submit" value="Login" id="login_button">	   
 	</form>
 	<br>
-	<a href="<c:url value='/register.jsp' />"><span>Register</span></a>
+	<a id="register" href="<c:url value='/register.jsp' />">Register</a>
 	<br>
 	<hr>
 	

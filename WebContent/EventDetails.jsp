@@ -49,6 +49,6 @@
 
  </form>
  <a href="<c:url value='/UserController?action=homepage' />">
-<input type="submit" value="Back"></a>
+<input type="submit" value="Back" id="homepage"></a>
 </body>
 </html>

@@ -1,0 +1,6 @@
+1,,,Please correct the following errors,Username cannot be empty,Password cannot be empty
+2,9vincent,Vin!12,Please correct the following errors,Username must start with a letter,Password length must be >7 and <30
+3,vin,vin!1234,Please correct the following errors,Username length must be > 4 and < 20 characters.,Password must contain an upper case letter
+4,vincent!,VIN!1234,Please correct the following errors,Username cannot contain special characters,Password must contain a lower case letter
+,vincent,Vincent!,Please correct the following errors,,Password must contain a number
+,vincent,Vincent123,Please correct the following errors,,Password must contain a special character

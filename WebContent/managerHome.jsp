@@ -15,7 +15,7 @@
 		</div>
 		<form action="<c:url value='/UserController?action=logout' />"
 			method="post">
-			<input type="submit" value="Logout">
+			<input type="submit" value="Logout" id="logout">
 		</form>
 
 	</div>

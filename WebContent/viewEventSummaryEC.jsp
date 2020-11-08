@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Search Assigned Events</h1>
-	<label class="errorPane"><c:out value='${error.errorMsg}' /></label>
+	<label class="errorPane" id="errorMsg"><c:out value='${error.errorMsg}' /></label>
 	<form method="post"	action="<c:url value='/EventController?action=searchAssignedEvents' /> ">
 		<p>
 			Date: <input type="text" id="datepicker" name="datepicker"> <label class="errorPane"><c:out value='${error.dateError}' /></label>
@@ -20,10 +20,10 @@
 		<p>
 			Time: <input type="text" id="timepicker" name="timepicker"> <label class="errorPane"><c:out value='${error.startTimeError}' /></label>
 		</p>
-		<input type="submit" value="Search" />
+		<input type="submit" value="Search" id="search" />
 	</form>
 	<a href="<c:url value='/UserController?action=homepage' />"> <input
-		type="submit" value="Back"></a>
+		type="submit" value="Back" id="back"></a>
 	<hr>
 	<h5>Events assigned to ${user.firstName} ${user.lastName}</h5>
 	<table border="1" class="myTable">
@@ -45,7 +45,7 @@
 				<td class="myTable20 "><c:out value="${item.duration}" /></td>
 				<td class="myTable20 "><c:out value="${item.location}" /></td>
 				<td class="myTable20 "><c:out value="${item.estAttendance}" /></td>
-				<td><a
+				<td><a id="details"
 					href="<c:url value='/EventController?action=eventDetails&id=${item.id}' />">
 						Details</a></td>
 			</tr>

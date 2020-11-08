@@ -1,9 +1,0 @@
-1,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,alan,15,,,,
-2,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,jyotir,15,Please correct the following errors,jyotir is not available at that time,,
-3,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,alan,one,Please correct the following errors,,Estimated attendees must be a number,
-4,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,alan,0,Please correct the following errors,,Estimated attendees must be greater than 0,
-5,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,alan,1,,,,
-6,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,alan,100,,,,
-7,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 16:00,alan,101,Please correct the following errors,,Estimated attendees must be <=100,
-8,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 22:01,alan,15,Please correct the following errors,,,Duration cannot exceed close time
-9,5,Bowling 2,100,Deck 8,60,ATHLETIC,10/8/20 0:00,10/8/20 15:00,10/8/20 20:00,alan,15,,,,

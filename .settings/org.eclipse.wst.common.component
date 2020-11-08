@@ -3,6 +3,10 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/configuration"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/sharedUIMap"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/screenShots"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/functions"/>
         <property name="context-root" value="CruiseActivityManagement"/>
         <property name="java-output-path" value="/CruiseActivityManagement/build/classes"/>
     </wb-module>

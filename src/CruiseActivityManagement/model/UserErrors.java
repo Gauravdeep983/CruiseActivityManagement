@@ -10,23 +10,24 @@ public class UserErrors {
 	private String emailError = "";
 	private String roomNumberError = "";
 	private String deckNumberError = "";
-	
+
 	// Default constructor
 	public UserErrors() {
 		this.errorMsg = "";
 	}
-		
+
 	public String getErrorMsg() {
 		return errorMsg;
 	}
-	
+
 	public void setErrorMsg() {
-		if (!usernameError.equals("") || !passwordError.equals("") || !firstNameError.equals("") || 
-				!lastNameError.equals("") || !phoneError.equals("") || !emailError.equals("") || 
-				!roomNumberError.equals("") || !deckNumberError.equals("")) 
-			errorMsg = "Please correct the following errors";		
+		if (!usernameError.equals("") || !passwordError.equals("") || !firstNameError.equals("")
+				|| !lastNameError.equals("") || !phoneError.equals("") || !emailError.equals("")
+				|| !roomNumberError.equals("") || !deckNumberError.equals("")) {
+			errorMsg = "Please correct the following errors";
+		}
 	}
-	
+
 	public String getUsernameError() {
 		return usernameError;
 	}
@@ -90,7 +91,5 @@ public class UserErrors {
 	public void setDeckNumberError(String deckNumberError) {
 		this.deckNumberError = deckNumberError;
 	}
-	
 
 }
-

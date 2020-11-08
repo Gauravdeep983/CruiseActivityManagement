@@ -25,8 +25,8 @@
 				<td><select name="event_name"
 					style="width: 153px; height: 27px;">
 						<option selected="<c:out value='${event.event_name}'/>"
-							value="<c:out value='${event.event_name}'/>"><c:out
-								value='${event.event_name}' /></option>
+							value="<c:out value='${event.event_name}'/>">
+							<c:out value="<c:out value='${event.event_name}'/>" /></option>
 						<option value="Bowling 1">Bowling 1</option>
 						<option value="Bowling 2">Bowling 2</option>
 						<option value="Movie 1">Movie 1</option>
@@ -91,7 +91,7 @@
 				<td><input type="text" id="datepicker" name="datepicker"
 					value="<c:out value="${event.date}"/>"> <label
 					class="errorPane"><c:out value='${error.dateError}' /></label></td>
-				
+
 
 			</tr>
 
@@ -100,7 +100,7 @@
 				<td><input type="text" id="timepicker" name="timepickerFrom">
 					<label class="errorPane"><c:out
 							value='${error.startTimeError}' /></label></td>
-				
+
 			</tr>
 
 			<tr>
@@ -108,14 +108,15 @@
 				<td><input type="text" id="timepicker" name="timepickerTo">
 					<label class="errorPane"><c:out
 							value='${error.startTimeError}' /></label></td>
-				
+
 			</tr>
 
 			<tr>
 				<td>Event Coordinator:</td>
 				<td><select name="event_coordinator"
 					style="width: 153px; height: 27px;">
-					<option selected="<c:out value='${event.eventCoordinator.toLowerCase()}'/>"
+						<option
+							selected="<c:out value='${event.eventCoordinator.toLowerCase()}'/>"
 							value="<c:out value='${event.eventCoordinator.toLowerCase()}'/>"><c:out
 								value='${event.eventCoordinator.toLowerCase()}' /></option>
 						<c:forEach items="${coordinators}" var="item">
@@ -144,8 +145,8 @@
 
 		</table>
 	</form>
-	<a href="<c:url value='/EventController?action=listCreatedEvents' />"> <input
-		type="submit" value="Back">
+	<a href="<c:url value='/EventController?action=listCreatedEvents' />">
+		<input type="submit" value="Back">
 	</a>
 	<script>
 		flatpickr("#datepicker", {

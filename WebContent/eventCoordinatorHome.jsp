@@ -13,7 +13,7 @@
 				<td><h1>Hello ${user.firstName}</h1></td>
 				<td>(EC Homepage)</td>
 				<td><a href="<c:url value='/UserController?action=logout' />">
-						<input type="submit" value="Logout">
+						<input type="submit" value="Logout" id="logout">
 				</a></td>
 			</tr>
 			<tr>
@@ -22,7 +22,7 @@
 						<tr>
 							<td><a
 								href="<c:url value='/EventController?action=searchEventsEC' />">
-									<input type="submit" value="View Event Summary">
+									<input type="submit" value="View Event Summary" id="eventSummaryEC">
 							</a></td>
 
 
