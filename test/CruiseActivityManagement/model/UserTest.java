@@ -1,4 +1,4 @@
-	package CruiseActivityManagement.model;
+package CruiseActivityManagement.model;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -22,7 +22,7 @@ public class UserTest {
 	}
 
 	@Test
-	@FileParameters("test/model/User_test_cases1.csv")
+	@FileParameters("test\\CruiseActivityManagement\\model\\User_test_cases1.csv")
 	public void registrationTest(int testcaseNo, String username, String password, String firstName, String lastName,
 			String phone, String email, String roomNumber, String deckNumber, String membershipType, String role,
 			String errorMsg, String usernameError, String passwordError, String firstNameError, String lastNameError,
@@ -44,7 +44,7 @@ public class UserTest {
 	}
 
 	@Test
-	@FileParameters("test/model/login_test.csv") 
+	@FileParameters("test\\CruiseActivityManagement\\model\\login_test.csv") 
 	public void loginTest(int testcaseNo, String username, String password, String errorMsg, String usernameError,
 			String passwordError) {
 		user.setUser(username, password);
@@ -56,7 +56,7 @@ public class UserTest {
 	}
 
 	@Test
-	@FileParameters("test/model/User_test_cases1.csv") 
+	@FileParameters("test\\CruiseActivityManagement\\model\\User_test_cases1.csv") 
 	public void updateProfileTest(int testcaseNo, String username, String password, String firstName, String lastName,
 			String phone, String email, String roomNumber, String deckNumber, String membershipType, String role,
 			String errorMsg, String usernameError, String passwordError, String firstNameError, String lastNameError,

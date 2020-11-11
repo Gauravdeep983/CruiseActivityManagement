@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CAM_BusinessFunctions.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Nov 11, 2020 4:48:13 PM)</a> &gt; <a href="../../index.html" class="el_group">CruiseActivityManagement</a> &gt; <a href="../index.html" class="el_bundle">functions</a> &gt; <a href="index.source.html" class="el_package">CruiseActivityMangement</a> &gt; <span class="el_source">CAM_BusinessFunctions.java</span></div><h1>CAM_BusinessFunctions.java</h1><pre class="source lang-java linenums">package CruiseActivityMangement;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+
+<span class="nc" id="L15">public class CAM_BusinessFunctions {</span>
+	public static WebDriver driver;
+	public static String baseUrl;
+	public static Properties prop;
+
+	public void CAM_BF_Login(WebDriver driver, String username, String password) {
+<span class="nc" id="L21">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Login_Username&quot;))).clear();</span>
+<span class="nc" id="L22">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Login_Username&quot;))).sendKeys(username);</span>
+<span class="nc" id="L23">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Login_Password&quot;))).clear();</span>
+<span class="nc" id="L24">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Login_Password&quot;))).sendKeys(password);</span>
+<span class="nc" id="L25">		driver.findElement(By.id(prop.getProperty(&quot;Btn_Login_Login&quot;))).click();</span>
+<span class="nc" id="L26">	}</span>
+
+	public void CAM_BF_Register(WebDriver driver, String username, String password, String firstName, String lastName,
+			String phone, String email, String roomNumber, String deckNumber) {
+<span class="nc" id="L30">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Register_Username&quot;))).clear();</span>
+<span class="nc" id="L31">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Register_Username&quot;))).sendKeys(username);</span>
+<span class="nc" id="L32">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Register_Password&quot;))).clear();</span>
+<span class="nc" id="L33">		driver.findElement(By.name(prop.getProperty(&quot;Txt_Register_Password&quot;))).sendKeys(password);</span>
+<span class="nc" id="L34">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_FirstName&quot;))).clear();</span>
+<span class="nc" id="L35">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_FirstName&quot;))).sendKeys(firstName);</span>
+<span class="nc" id="L36">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_LastName&quot;))).clear();</span>
+<span class="nc" id="L37">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_LastName&quot;))).sendKeys(lastName);</span>
+<span class="nc" id="L38">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_Phone&quot;))).clear();</span>
+<span class="nc" id="L39">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_Phone&quot;))).sendKeys(phone);</span>
+<span class="nc" id="L40">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_Email&quot;))).clear();</span>
+<span class="nc" id="L41">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_Email&quot;))).sendKeys(email);</span>
+<span class="nc" id="L42">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_RoomNumber&quot;))).clear();</span>
+<span class="nc" id="L43">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_RoomNumber&quot;))).sendKeys(roomNumber);</span>
+<span class="nc" id="L44">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_DeckNumber&quot;))).clear();</span>
+<span class="nc" id="L45">		driver.findElement(By.id(prop.getProperty(&quot;Txt_Register_DeckNumber&quot;))).sendKeys(deckNumber);</span>
+//		new Select(driver.findElement(By.id(prop.getProperty(&quot;Lst_Register_MembershipType&quot;))))
+//				.selectByVisibleText(membershipType);
+<span class="nc" id="L48">		driver.findElement(By.id(prop.getProperty(&quot;Btn_Register_Submit&quot;))).click();</span>
+<span class="nc" id="L49">	}</span>
+
+	// Event Coordinator methods
+	public void searchAssignedEvents(WebDriver driver, String date, String time) {
+<span class="nc" id="L53">		driver.findElement(By.id(prop.getProperty(&quot;Btn_ECHomepage_EventSummary&quot;))).click();</span>
+<span class="nc" id="L54">		JavascriptExecutor js = (JavascriptExecutor) driver;</span>
+		// convert hidden field to text field for searching
+<span class="nc" id="L56">		js.executeScript(&quot;document.getElementById('datepicker').setAttribute('type', 'text');&quot;);</span>
+//		driver.findElement(By.id(prop.getProperty(&quot;Txt_EventSummaryEC_Date&quot;))).clear();
+<span class="nc" id="L58">		driver.findElement(By.id(prop.getProperty(&quot;Txt_EventSummaryEC_Date&quot;))).sendKeys(date);</span>
+//		driver.findElement(By.id(prop.getProperty(&quot;Txt_EventSummaryEC_Time&quot;))).clear();
+<span class="nc" id="L60">		js.executeScript(&quot;document.getElementById('timepicker').setAttribute('type', 'text');&quot;);</span>
+<span class="nc" id="L61">		driver.findElement(By.id(prop.getProperty(&quot;Txt_EventSummaryEC_Time&quot;))).sendKeys(time);</span>
+<span class="nc" id="L62">		driver.findElement(By.id(prop.getProperty(&quot;Btn_EventSummaryEC_Search&quot;))).click();</span>
+<span class="nc" id="L63">	}</span>
+
+	public void takeScreenShot(WebDriver driver, String screenshotname) {
+		// Random number
+<span class="nc" id="L67">		int random_int = (int) (Math.random() * (1000 - 0 + 1) + 0);</span>
+		// Take screenshot and save it in source object
+<span class="nc" id="L69">		File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);</span>
+		// Define path where Screenshots will be saved
+
+		// Copy the source file at the screenshot path
+		try {
+<span class="nc" id="L74">			FileUtils.copyFile(source, new File(&quot;./screenShots/&quot; + screenshotname + random_int + &quot;.png&quot;));</span>
+<span class="nc" id="L75">		} catch (IOException e1) {</span>
+		}
+		try {
+//			    Change the thread value to run test files with delay
+<span class="nc" id="L79">			Thread.sleep(3_000);</span>
+<span class="nc" id="L80">		} catch (InterruptedException e) {</span>
+		}
+<span class="nc" id="L82">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Nov 11, 2020 4:48:13 PM)</div></body></html>

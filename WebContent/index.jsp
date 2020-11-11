@@ -12,7 +12,7 @@
 	<h1>Cruise Ship Activity Coordination System</h1>
 </div>
 <div class="content">
-<label class="errorPane"><c:out value='${message}'/></label>
+<label class="errorPane" id="success_msg"><c:out value='${message}'/></label>
 <label class="errorPane"><c:out value='${errorMsgs.errorMsg}'/></label>
 	<form action="<c:url value='/UserController' />" method="POST">
 		<input type="hidden" name="action" value="login">

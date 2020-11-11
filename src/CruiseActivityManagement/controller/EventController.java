@@ -33,17 +33,15 @@ public class EventController extends HttpServlet {
 
 		// Search for events
 		if (action.equalsIgnoreCase("searchEvents")) {
-//			User user = (User) session.getAttribute("user");
 			String date = request.getParameter("datepicker");
 			String time = request.getParameter("timepicker");
 			String eventType = request.getParameter("event_type");
-			Event event = new Event();
 			EventErrors err = new EventErrors();
 			// String format for database
 			time = date.concat(" ").concat(time);
 			date = date.concat(" 0:00");
 			// Validate datetime
-			//event.validateDate(err, date, time);
+			// event.validateDate(err, date, time);
 			// Fetch all events based on filter
 			ArrayList<Event> EventsInDB = EventDAO.listAllEvents(date, time, eventType);
 			if (err.getErrorMsg().equals("")) {
@@ -76,7 +74,6 @@ public class EventController extends HttpServlet {
 			session.removeAttribute("errorMsgs");
 			session.removeAttribute("EVENTS");
 			User user = (User) session.getAttribute("user");
-			Event event = new Event();
 			String date = request.getParameter("datepicker");
 			String time = request.getParameter("timepicker");
 			EventErrors err = new EventErrors();
@@ -95,8 +92,6 @@ public class EventController extends HttpServlet {
 			} else {
 				session.removeAttribute("RESULT");
 				session.setAttribute("error", err);
-//				err.setErrorMsg("No events found.");
-//				session.setAttribute("error", err);
 				url = "/viewReservedEvents.jsp";
 			}
 
@@ -136,11 +131,10 @@ public class EventController extends HttpServlet {
 				session.setAttribute("error", err);
 				url = "/viewEventSummaryEC.jsp";
 			}
-
 		} else if (action.equalsIgnoreCase("userReservedEvents")) {
 			url = "/viewReservedEvents.jsp";
 
-			// View specific event details (for booking)
+			// View specific event details (for booking) (Passenger function)
 		} else if (action.equalsIgnoreCase("reserveEventDetails")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			ArrayList<Event> EventInDB = new ArrayList<Event>();
@@ -149,18 +143,15 @@ public class EventController extends HttpServlet {
 			session.setAttribute("EVENT", EventInDB.get(0));
 			url = "/viewEventPassenger.jsp";
 
+			// Specific event details assigned to EC
 		} else if (action.equalsIgnoreCase("eventDetails")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-//			  User user = (User)session.getAttribute("user");
 			ArrayList<Event> EventInDB = new ArrayList<Event>();
 			EventInDB = EventDAO.listSpecificEvent(id);
 			session.removeAttribute("EVENT");
 			session.setAttribute("EVENT", EventInDB.get(0));
-//	    	  if (user.getRole().equalsIgnoreCase("PASSENGER")) {
-//		          url = "/viewEventPassenger.jsp";
-//	    	  } else {
+			// Redirect to event details view for EC
 			url = "/EventDetails.jsp";
-//	    	  }
 
 			// Reserve event function
 		} else if (action.equalsIgnoreCase("reserveEvent")) {
@@ -198,18 +189,16 @@ public class EventController extends HttpServlet {
 			session.removeAttribute("EVENTS");
 			url = "/listCreatedEvents.jsp";
 
+			// Search created events (Manager function)
 		} else if (action.equalsIgnoreCase("searchCreatedEvents")) {
 			session.removeAttribute("errorMsgs");
 			session.removeAttribute("EVENTS");
-			Event event = new Event();
 			String date = request.getParameter("datepicker");
 			String time = request.getParameter("timepicker");
 			EventErrors err = new EventErrors();
 			// String format for database
 			time = date.concat(" ").concat(time);
 			date = date.concat(" 0:00");
-			// Validate datetime
-			// event.validateDate(err, date, time);
 			// Fetch all events based on filter
 			ArrayList<Event> EventsInDB = EventDAO.listAllEvents(date, time);
 
@@ -220,11 +209,10 @@ public class EventController extends HttpServlet {
 			} else {
 				session.removeAttribute("RESULT");
 				session.setAttribute("error", err);
-//				err.setErrorMsg("No events found.");
-//				session.setAttribute("error", err);
 				url = "/listCreatedEvents.jsp";
 			}
 
+			// Redirection to Modify event page
 		} else if (action.equalsIgnoreCase("modifySpecificEvent")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			ArrayList<Event> EventInDB = new ArrayList<Event>();
@@ -251,10 +239,10 @@ public class EventController extends HttpServlet {
 			timeTo = date.concat(" ").concat(timeTo);
 			date = date.concat(" 0:00");
 			// Validate datetime
-			event.setEvent(Integer.parseInt(ogId), request.getParameter("event_name"),
-					request.getParameter("capacity"), request.getParameter("location"),
-					Integer.parseInt(request.getParameter("duration")), request.getParameter("type"), date, timeFrom,
-					timeTo, eventCoordinator, request.getParameter("est_attendance"));
+			event.setEvent(Integer.parseInt(ogId), request.getParameter("event_name"), request.getParameter("capacity"),
+					request.getParameter("location"), Integer.parseInt(request.getParameter("duration")),
+					request.getParameter("type"), date, timeFrom, timeTo, eventCoordinator,
+					request.getParameter("est_attendance"));
 			// Validation
 			event.validateUpdateEvent(event, eventErrors);
 			// If no error persists

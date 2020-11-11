@@ -25,7 +25,7 @@ public class EventTest {
 	}
 
 	@Test
-	@FileParameters("test/model/updateEvent.csv")
+	@FileParameters("test\\CruiseActivityManagement\\model\\updateEvent.csv")
 	public void eventUpdateTest(int testcaseNo, int id, String event_name, String capacity, String location,
 			int duration, String type, String date, String startTime, String endTime, String eventCoordinator,
 			String estAttendance, String errorMsg, String eventCoordinatorError, String estAttendanceError,
@@ -42,7 +42,7 @@ public class EventTest {
 	}
 
 	@Test
-	@FileParameters("test/model/reservationTest.csv")
+	@FileParameters("test\\CruiseActivityManagement\\model\\reservationTest.csv")
 	public void eventReservationTest(int testcaseNo, int id, String event_name, String capacity, String location,
 			int duration, String type, String date, String startTime, String endTime, String eventCoordinator,
 			String estAttendance, String username, String password, String errorMsg, String typeError,
@@ -59,7 +59,7 @@ public class EventTest {
 	}
 
 	@Test
-	@FileParameters("test/model/pastValidations.csv")
+	@FileParameters("test\\CruiseActivityManagement\\model\\pastValidations.csv")
 	public void pastDateTest(int testcaseNo, String date, String startTime, String errorMsg, String dateError,
 			String timeError) {
 

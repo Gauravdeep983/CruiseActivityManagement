@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EventErrors.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Nov 11, 2020 4:48:13 PM)</a> &gt; <a href="../../index.html" class="el_group">CruiseActivityManagement</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">CruiseActivityManagement.model</a> &gt; <span class="el_source">EventErrors.java</span></div><h1>EventErrors.java</h1><pre class="source lang-java linenums">package CruiseActivityManagement.model;
+
+public class EventErrors {
+<span class="fc" id="L4">	private String errorMsg = &quot;&quot;;</span>
+<span class="fc" id="L5">	private String typeError = &quot;&quot;;</span>
+<span class="fc" id="L6">	private String capacityError = &quot;&quot;;</span>
+<span class="fc" id="L7">	private String durationError = &quot;&quot;;</span>
+<span class="fc" id="L8">	private String dateError = &quot;&quot;;</span>
+<span class="fc" id="L9">	private String startTimeError = &quot;&quot;;</span>
+<span class="fc" id="L10">	private String eventCoordinatorError = &quot;&quot;;</span>
+<span class="fc" id="L11">	private String estAttendanceError = &quot;&quot;;</span>
+	
+	
+<span class="fc" id="L14">	public EventErrors() {</span>
+<span class="fc" id="L15">		this.setErrorMsg(&quot;&quot;);</span>
+<span class="fc" id="L16">	} </span>
+
+	public void setErrorMsg() {
+<span class="fc bfc" id="L19" title="All 8 branches covered.">		if (!typeError.equals(&quot;&quot;) || !capacityError.equals(&quot;&quot;) || !durationError.equals(&quot;&quot;) || !dateError.equals(&quot;&quot;) || </span>
+<span class="fc bfc" id="L20" title="All 6 branches covered.">				!startTimeError.equals(&quot;&quot;) || !eventCoordinatorError.equals(&quot;&quot;) || !estAttendanceError.equals(&quot;&quot;)) </span>
+<span class="fc" id="L21">			errorMsg = &quot;Please correct the following errors&quot;;		</span>
+<span class="fc" id="L22">	}</span>
+
+	public String getErrorMsg() {
+<span class="fc" id="L25">		return errorMsg;</span>
+	}
+
+
+	public void setErrorMsg(String errorMsg) {
+<span class="fc" id="L30">		this.errorMsg = errorMsg;</span>
+<span class="fc" id="L31">	}</span>
+
+
+	public String getTypeError() {
+<span class="fc" id="L35">		return typeError;</span>
+	}
+
+
+	public void setTypeError(String typeError) {
+<span class="fc" id="L40">		this.typeError = typeError;</span>
+<span class="fc" id="L41">	}</span>
+
+
+	public String getCapacityError() {
+<span class="fc" id="L45">		return capacityError;</span>
+	}
+
+
+	public void setCapacityError(String capacityError) {
+<span class="fc" id="L50">		this.capacityError = capacityError;</span>
+<span class="fc" id="L51">	}</span>
+
+
+	public String getDurationError() {
+<span class="fc" id="L55">		return durationError;</span>
+	}
+
+
+	public void setDurationError(String durationError) {
+<span class="fc" id="L60">		this.durationError = durationError;</span>
+<span class="fc" id="L61">	}</span>
+
+
+	public String getDateError() {
+<span class="fc" id="L65">		return dateError;</span>
+	}
+
+
+	public void setDateError(String dateError) {
+<span class="fc" id="L70">		this.dateError = dateError;</span>
+<span class="fc" id="L71">	}</span>
+
+
+	public String getStartTimeError() {
+<span class="fc" id="L75">		return startTimeError;</span>
+	}
+
+
+	public void setStartTimeError(String startTimeError) {
+<span class="fc" id="L80">		this.startTimeError = startTimeError;</span>
+<span class="fc" id="L81">	}</span>
+
+
+	public String getEventCoordinatorError() {
+<span class="fc" id="L85">		return eventCoordinatorError;</span>
+	}
+
+
+	public void setEventCoordinatorError(String eventCoordinatorError) {
+<span class="fc" id="L90">		this.eventCoordinatorError = eventCoordinatorError;</span>
+<span class="fc" id="L91">	}</span>
+
+
+	public String getEstAttendanceError() {
+<span class="fc" id="L95">		return estAttendanceError;</span>
+	}
+
+
+	public void setEstAttendanceError(String estAttendanceError) {
+<span class="fc" id="L100">		this.estAttendanceError = estAttendanceError;</span>
+<span class="fc" id="L101">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Nov 11, 2020 4:48:13 PM)</div></body></html>

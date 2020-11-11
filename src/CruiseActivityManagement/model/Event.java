@@ -7,7 +7,7 @@ import java.util.Date;
 
 import CruiseActivityManagement.data.EventDAO;
 import CruiseActivityManagement.data.UserDAO;
- 
+
 public class Event implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id; // PK in 'event' table,
@@ -36,7 +36,7 @@ public class Event implements java.io.Serializable {
 		setEventCoordinator(eventCoordinator);
 		setEstAttendance(estAttendance);
 	}
-	
+
 	public void validateReservation(Event event, User user, EventErrors eventErrors) {
 		eventErrors.setTypeError(
 				validateMaxReservationLimit(user.getUsername(), event.getId(), event.getDate(), event.getType()));
@@ -54,9 +54,6 @@ public class Event implements java.io.Serializable {
 		eventErrors.setEstAttendanceError(validateEstAttendees(event.getEstAttendance()));
 		eventErrors.setEventCoordinatorError(
 				validateAvailableCoordinator(event.getEventCoordinator(), event.getStartTime(), event.getEndTime()));
-//		eventErrors.setDateError(validatePastDate(event.getDate()));
-//		eventErrors.setStartTimeError(validatePastTime(event.getStartTime()));
-//		eventErrors.setEndTimeError(validatePastTime(event.getEndTime()));
 		eventErrors.setDurationError(validateExceedingDuration(event.getEndTime()));
 		eventErrors.setErrorMsg();
 	}
@@ -75,6 +72,8 @@ public class Event implements java.io.Serializable {
 		long difference = d2.getTime() - d1.getTime();
 		if (difference < 0) {
 			result = "Duration cannot exceed close time";
+		} else {
+			result = "";
 		}
 		return result;
 	}
@@ -107,10 +106,8 @@ public class Event implements java.io.Serializable {
 
 	private String validatePastDate(String selectedDate) {
 		String result = "";
-//		SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy HH:mm");
 		SimpleDateFormat sdf1 = new SimpleDateFormat("M/d/yy");
 		String currentDate = sdf1.format(new Date());
-//		currentDate = currentDate.concat(" 0:00");
 		try {
 			Date selectedDateUpdated = sdf1.parse(selectedDate);
 			selectedDate = sdf1.format(selectedDateUpdated);

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EventController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Nov 11, 2020 4:48:13 PM)</a> &gt; <a href="../../index.html" class="el_group">CruiseActivityManagement</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">CruiseActivityManagement.controller</a> &gt; <span class="el_source">EventController.java</span></div><h1>EventController.java</h1><pre class="source lang-java linenums">package CruiseActivityManagement.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import CruiseActivityManagement.data.EventDAO;
+import CruiseActivityManagement.data.UserDAO;
+import CruiseActivityManagement.model.Event;
+import CruiseActivityManagement.model.EventErrors;
+import CruiseActivityManagement.model.User;
+
+@WebServlet(&quot;/EventController&quot;)
+<span class="fc" id="L20">public class EventController extends HttpServlet {</span>
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+<span class="fc" id="L26">		doPost(request, response);</span>
+<span class="fc" id="L27">	}</span>
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+<span class="fc" id="L31">		String action = request.getParameter(&quot;action&quot;), url = &quot;&quot;;</span>
+<span class="fc" id="L32">		HttpSession session = request.getSession();</span>
+
+		// Search for events
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">		if (action.equalsIgnoreCase(&quot;searchEvents&quot;)) {</span>
+<span class="nc" id="L36">			String date = request.getParameter(&quot;datepicker&quot;);</span>
+<span class="nc" id="L37">			String time = request.getParameter(&quot;timepicker&quot;);</span>
+<span class="nc" id="L38">			String eventType = request.getParameter(&quot;event_type&quot;);</span>
+<span class="nc" id="L39">			EventErrors err = new EventErrors();</span>
+			// String format for database
+<span class="nc" id="L41">			time = date.concat(&quot; &quot;).concat(time);</span>
+<span class="nc" id="L42">			date = date.concat(&quot; 0:00&quot;);</span>
+			// Validate datetime
+			// event.validateDate(err, date, time);
+			// Fetch all events based on filter
+<span class="nc" id="L46">			ArrayList&lt;Event&gt; EventsInDB = EventDAO.listAllEvents(date, time, eventType);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">			if (err.getErrorMsg().equals(&quot;&quot;)) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">				if (!EventsInDB.isEmpty()) {</span>
+<span class="nc" id="L49">					session.removeAttribute(&quot;error&quot;);</span>
+<span class="nc" id="L50">					session.setAttribute(&quot;RESULT&quot;, EventsInDB);</span>
+<span class="nc" id="L51">					url = &quot;/searchEvents.jsp&quot;;</span>
+<span class="nc" id="L52">				} else {</span>
+<span class="nc" id="L53">					session.removeAttribute(&quot;RESULT&quot;);</span>
+<span class="nc" id="L54">					err.setErrorMsg(&quot;No events found.&quot;);</span>
+<span class="nc" id="L55">					session.setAttribute(&quot;error&quot;, err);</span>
+<span class="nc" id="L56">					url = &quot;/searchEvents.jsp&quot;;</span>
+				}
+<span class="nc" id="L58">			} else {// Show errors</span>
+<span class="nc" id="L59">				session.setAttribute(&quot;error&quot;, err);</span>
+<span class="nc" id="L60">				url = &quot;/searchEvents.jsp&quot;;</span>
+
+			}
+
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;listSpecificEvent&quot;)) {</span>
+<span class="nc" id="L65">			int id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="nc" id="L66">			ArrayList&lt;Event&gt; EventInDB = new ArrayList&lt;Event&gt;();</span>
+<span class="nc" id="L67">			EventInDB = EventDAO.listSpecificEvent(id);</span>
+<span class="nc" id="L68">			session.removeAttribute(&quot;EVENTS&quot;);</span>
+<span class="nc" id="L69">			session.setAttribute(&quot;EVENTS&quot;, EventInDB);</span>
+<span class="nc" id="L70">			url = &quot;/viewSpecificEventManager.jsp&quot;;</span>
+
+			// Search reserved events
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;searchReservedEvents&quot;)) {</span>
+<span class="nc" id="L74">			session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="nc" id="L75">			session.removeAttribute(&quot;EVENTS&quot;);</span>
+<span class="nc" id="L76">			User user = (User) session.getAttribute(&quot;user&quot;);</span>
+<span class="nc" id="L77">			String date = request.getParameter(&quot;datepicker&quot;);</span>
+<span class="nc" id="L78">			String time = request.getParameter(&quot;timepicker&quot;);</span>
+<span class="nc" id="L79">			EventErrors err = new EventErrors();</span>
+			// String format for database
+<span class="nc" id="L81">			time = date.concat(&quot; &quot;).concat(time);</span>
+<span class="nc" id="L82">			date = date.concat(&quot; 0:00&quot;);</span>
+			// Validate datetime
+//			event.validateDate(err, date, time);
+			// Fetch all events based on filter
+<span class="nc" id="L86">			ArrayList&lt;Event&gt; EventsInDB = EventDAO.listReservedEventsByUsername(user.getUsername(), date, time);</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (!EventsInDB.isEmpty()) {</span>
+<span class="nc" id="L89">				session.removeAttribute(&quot;error&quot;);</span>
+<span class="nc" id="L90">				session.setAttribute(&quot;EVENTS&quot;, EventsInDB);</span>
+<span class="nc" id="L91">				url = &quot;/viewReservedEvents.jsp&quot;;</span>
+<span class="nc" id="L92">			} else {</span>
+<span class="nc" id="L93">				session.removeAttribute(&quot;RESULT&quot;);</span>
+<span class="nc" id="L94">				session.setAttribute(&quot;error&quot;, err);</span>
+<span class="nc" id="L95">				url = &quot;/viewReservedEvents.jsp&quot;;</span>
+			}
+
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;searchEventsPassenger&quot;)) {</span>
+<span class="nc" id="L99">			session.removeAttribute(&quot;RESULT&quot;);</span>
+<span class="nc" id="L100">			session.removeAttribute(&quot;error&quot;);</span>
+<span class="nc" id="L101">			session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="nc" id="L102">			session.removeAttribute(&quot;EVENTS&quot;);</span>
+<span class="nc" id="L103">			url = &quot;/searchEvents.jsp&quot;;</span>
+
+<span class="pc bfc" id="L105" title="All 2 branches covered.">		} else if (action.equalsIgnoreCase(&quot;searchEventsEC&quot;)) {</span>
+<span class="fc" id="L106">			session.removeAttribute(&quot;RESULT&quot;);</span>
+<span class="fc" id="L107">			session.removeAttribute(&quot;error&quot;);</span>
+<span class="fc" id="L108">			session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="fc" id="L109">			session.removeAttribute(&quot;EVENTS&quot;);</span>
+<span class="fc" id="L110">			url = &quot;/viewEventSummaryEC.jsp&quot;;</span>
+
+			// EC Search
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		} else if (action.equalsIgnoreCase(&quot;searchAssignedEvents&quot;)) {</span>
+<span class="fc" id="L114">			User user = (User) session.getAttribute(&quot;user&quot;);</span>
+<span class="fc" id="L115">			String date = request.getParameter(&quot;datepicker&quot;);</span>
+<span class="fc" id="L116">			String time = request.getParameter(&quot;timepicker&quot;);</span>
+<span class="fc" id="L117">			EventErrors err = new EventErrors();</span>
+			// String format for database
+<span class="fc" id="L119">			time = date.concat(&quot; &quot;).concat(time);</span>
+<span class="fc" id="L120">			date = date.concat(&quot; 0:00&quot;);</span>
+			// Fetch all events based on filter
+<span class="fc" id="L122">			ArrayList&lt;Event&gt; EventsInDB = EventDAO.listAssignedEvents(date, time, user.getUsername());</span>
+
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			if (!EventsInDB.isEmpty()) {</span>
+<span class="fc" id="L125">				session.removeAttribute(&quot;error&quot;);</span>
+<span class="fc" id="L126">				session.setAttribute(&quot;EVENTS&quot;, EventsInDB);</span>
+<span class="fc" id="L127">				url = &quot;/viewEventSummaryEC.jsp&quot;;</span>
+<span class="fc" id="L128">			} else {</span>
+<span class="fc" id="L129">				session.removeAttribute(&quot;RESULT&quot;);</span>
+<span class="fc" id="L130">				err.setErrorMsg(&quot;No events found.&quot;);</span>
+<span class="fc" id="L131">				session.setAttribute(&quot;error&quot;, err);</span>
+<span class="fc" id="L132">				url = &quot;/viewEventSummaryEC.jsp&quot;;</span>
+			}
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;userReservedEvents&quot;)) {</span>
+<span class="nc" id="L135">			url = &quot;/viewReservedEvents.jsp&quot;;</span>
+
+			// View specific event details (for booking) (Passenger function)
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;reserveEventDetails&quot;)) {</span>
+<span class="nc" id="L139">			int id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="nc" id="L140">			ArrayList&lt;Event&gt; EventInDB = new ArrayList&lt;Event&gt;();</span>
+<span class="nc" id="L141">			EventInDB = EventDAO.listSpecificEvent(id);</span>
+<span class="nc" id="L142">			session.removeAttribute(&quot;EVENT&quot;);</span>
+<span class="nc" id="L143">			session.setAttribute(&quot;EVENT&quot;, EventInDB.get(0));</span>
+<span class="nc" id="L144">			url = &quot;/viewEventPassenger.jsp&quot;;</span>
+
+			// Specific event details assigned to EC
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;eventDetails&quot;)) {</span>
+<span class="fc" id="L148">			int id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="fc" id="L149">			ArrayList&lt;Event&gt; EventInDB = new ArrayList&lt;Event&gt;();</span>
+<span class="fc" id="L150">			EventInDB = EventDAO.listSpecificEvent(id);</span>
+<span class="fc" id="L151">			session.removeAttribute(&quot;EVENT&quot;);</span>
+<span class="fc" id="L152">			session.setAttribute(&quot;EVENT&quot;, EventInDB.get(0));</span>
+			// Redirect to event details view for EC
+<span class="fc" id="L154">			url = &quot;/EventDetails.jsp&quot;;</span>
+
+			// Reserve event function
+<span class="pc bnc" id="L157" title="All 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;reserveEvent&quot;)) {</span>
+<span class="nc" id="L158">			Event event = (Event) session.getAttribute(&quot;EVENT&quot;);</span>
+<span class="nc" id="L159">			User user = (User) session.getAttribute(&quot;user&quot;);</span>
+<span class="nc" id="L160">			EventErrors eventErrors = new EventErrors();</span>
+			try {
+				// Validation
+<span class="nc" id="L163">				event.validateReservation(event, user, eventErrors);</span>
+				// Reserve
+<span class="nc bnc" id="L165" title="All 2 branches missed.">				if (eventErrors.getErrorMsg().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L166">					int inserted = EventDAO.reserveEvent(event, user);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">					if (inserted == 1) {</span>
+						// Show success msg
+<span class="nc" id="L169">						session.setAttribute(&quot;msg&quot;, &quot;Event successfully reserved.&quot;);</span>
+<span class="nc" id="L170">						url = &quot;/passengerHome.jsp&quot;;</span>
+<span class="nc" id="L171">					} else {</span>
+<span class="nc" id="L172">						throw new Exception(&quot;Failed to save in database!&quot;);</span>
+					}
+				} else {
+					// Show errors
+<span class="nc" id="L176">					session.setAttribute(&quot;errorMsgs&quot;, eventErrors);</span>
+<span class="nc" id="L177">					url = &quot;/viewEventPassenger.jsp&quot;;</span>
+				}
+<span class="nc" id="L179">			} catch (Exception ex) {</span>
+<span class="nc" id="L180">				eventErrors.setErrorMsg(ex.getMessage());</span>
+<span class="nc" id="L181">				url = &quot;/viewEventPassenger.jsp&quot;;</span>
+			}
+
+			// Redirects to search event (Manager function)
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		} else if (action.equals(&quot;listCreatedEvents&quot;)) {</span>
+<span class="nc" id="L186">			session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="nc" id="L187">			session.removeAttribute(&quot;RESULT&quot;);</span>
+<span class="nc" id="L188">			session.removeAttribute(&quot;error&quot;);</span>
+<span class="nc" id="L189">			session.removeAttribute(&quot;EVENTS&quot;);</span>
+<span class="nc" id="L190">			url = &quot;/listCreatedEvents.jsp&quot;;</span>
+
+			// Search created events (Manager function)
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;searchCreatedEvents&quot;)) {</span>
+<span class="nc" id="L194">			session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="nc" id="L195">			session.removeAttribute(&quot;EVENTS&quot;);</span>
+<span class="nc" id="L196">			String date = request.getParameter(&quot;datepicker&quot;);</span>
+<span class="nc" id="L197">			String time = request.getParameter(&quot;timepicker&quot;);</span>
+<span class="nc" id="L198">			EventErrors err = new EventErrors();</span>
+			// String format for database
+<span class="nc" id="L200">			time = date.concat(&quot; &quot;).concat(time);</span>
+<span class="nc" id="L201">			date = date.concat(&quot; 0:00&quot;);</span>
+			// Fetch all events based on filter
+<span class="nc" id="L203">			ArrayList&lt;Event&gt; EventsInDB = EventDAO.listAllEvents(date, time);</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			if (!EventsInDB.isEmpty()) {</span>
+<span class="nc" id="L206">				session.removeAttribute(&quot;error&quot;);</span>
+<span class="nc" id="L207">				session.setAttribute(&quot;EVENTS&quot;, EventsInDB);</span>
+<span class="nc" id="L208">				url = &quot;/listCreatedEvents.jsp&quot;;</span>
+<span class="nc" id="L209">			} else {</span>
+<span class="nc" id="L210">				session.removeAttribute(&quot;RESULT&quot;);</span>
+<span class="nc" id="L211">				session.setAttribute(&quot;error&quot;, err);</span>
+<span class="nc" id="L212">				url = &quot;/listCreatedEvents.jsp&quot;;</span>
+			}
+
+			// Redirection to Modify event page
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		} else if (action.equalsIgnoreCase(&quot;modifySpecificEvent&quot;)) {</span>
+<span class="nc" id="L217">			int id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="nc" id="L218">			ArrayList&lt;Event&gt; EventInDB = new ArrayList&lt;Event&gt;();</span>
+<span class="nc" id="L219">			EventInDB = EventDAO.listSpecificEvent(id);</span>
+			// get all event coordinators
+<span class="nc" id="L221">			ArrayList&lt;User&gt; coordinators = UserDAO.listEventCoordinators();</span>
+<span class="nc" id="L222">			session.setAttribute(&quot;coordinators&quot;, coordinators);</span>
+<span class="nc" id="L223">			session.removeAttribute(&quot;event&quot;);</span>
+<span class="nc" id="L224">			session.setAttribute(&quot;event&quot;, EventInDB.get(0));</span>
+<span class="nc" id="L225">			url = &quot;/editEvent.jsp&quot;;</span>
+
+			// Modify event
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		} else if (action.equals(&quot;updateEvent&quot;)) {</span>
+<span class="nc" id="L229">			Event event = new Event();</span>
+<span class="nc" id="L230">			EventErrors eventErrors = new EventErrors();</span>
+<span class="nc" id="L231">			String date = request.getParameter(&quot;datepicker&quot;);</span>
+<span class="nc" id="L232">			String timeFrom = request.getParameter(&quot;timepickerFrom&quot;);</span>
+<span class="nc" id="L233">			String timeTo = request.getParameter(&quot;timepickerTo&quot;);</span>
+<span class="nc" id="L234">			String ogId = request.getParameter(&quot;ogId&quot;);</span>
+<span class="nc" id="L235">			String eventCoordinator = request.getParameter(&quot;event_coordinator&quot;);</span>
+			// Set user
+			// String format for database
+<span class="nc" id="L238">			timeFrom = date.concat(&quot; &quot;).concat(timeFrom);</span>
+<span class="nc" id="L239">			timeTo = date.concat(&quot; &quot;).concat(timeTo);</span>
+<span class="nc" id="L240">			date = date.concat(&quot; 0:00&quot;);</span>
+			// Validate datetime
+<span class="nc" id="L242">			event.setEvent(Integer.parseInt(ogId), request.getParameter(&quot;event_name&quot;), request.getParameter(&quot;capacity&quot;),</span>
+<span class="nc" id="L243">					request.getParameter(&quot;location&quot;), Integer.parseInt(request.getParameter(&quot;duration&quot;)),</span>
+<span class="nc" id="L244">					request.getParameter(&quot;type&quot;), date, timeFrom, timeTo, eventCoordinator,</span>
+<span class="nc" id="L245">					request.getParameter(&quot;est_attendance&quot;));</span>
+			// Validation
+<span class="nc" id="L247">			event.validateUpdateEvent(event, eventErrors);</span>
+			// If no error persists
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			if (eventErrors.getErrorMsg().equals(&quot;&quot;)) {</span>
+				// Update event
+<span class="nc" id="L251">				EventDAO.updateEvent(event, ogId);</span>
+<span class="nc" id="L252">				session.removeAttribute(&quot;event&quot;);</span>
+				// Show success msg
+<span class="nc" id="L254">				session.setAttribute(&quot;msg&quot;, &quot;Event updated.&quot;);</span>
+<span class="nc" id="L255">				url = &quot;/managerHome.jsp&quot;;</span>
+
+<span class="nc" id="L257">			} else {</span>
+				// Show errors
+<span class="nc" id="L259">				session.setAttribute(&quot;error&quot;, eventErrors);</span>
+<span class="nc" id="L260">				url = &quot;/editEvent.jsp&quot;;</span>
+			}
+		}
+
+		// redirects to url specified
+<span class="fc" id="L265">		getServletContext().getRequestDispatcher(url).forward(request, response);</span>
+<span class="fc" id="L266">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Nov 11, 2020 4:48:13 PM)</div></body></html>

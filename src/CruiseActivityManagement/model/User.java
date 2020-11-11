@@ -149,7 +149,7 @@ public class User implements java.io.Serializable {
 		if (roomNumber.length() == 0) {
 			result = "Room number cannot be empty";
 		} else if (isValidNumber(roomNumber)) {
-			if (roomNumber.length() != 3) {
+			if (roomNumber.length() > 3) {
 				result = "Room number must have 3 digits";
 			} else if (Integer.parseInt(roomNumber) <= 99 || Integer.parseInt(roomNumber) >= 200) {
 				result = "Room number must be >=100 and <=199";
@@ -180,33 +180,19 @@ public class User implements java.io.Serializable {
 		return result;
 	}
 
-//	private String validateDeckNumber(String deckNumber) {
-//		String result = "";
-////		int length = (int) (Math.log10(deckNumber) + 1);
-//		if (!isValidNumber(deckNumber)) {
-//			result = "Deck number must be numeric";
-//		} else if (deckNumber.length() <= 0 || deckNumber.length() >= 3) {
-//			result = "Deck number must be 1 or 2 digit(s)";
-//		} else if (deckNumber.length() <= 0 || deckNumber.length() >= 16) {
-//			result = "Deck number must be >=1 and <=15";
-//		}
-//		return result;
-//	}
-
 	private String validateDeckNumber(String deckNumber) {
-        String result = "";
+		String result = "";
 //        int length = (int) (Math.log10(deckNumber) + 1);
-        if (!isValidNumber(deckNumber)) {
-            result = "Deck number must be numeric";
-        } else if (deckNumber.length() <= 0 || deckNumber.length() >= 3) {
-            result = "Deck number must be 1 or 2 digit(s)";
-        } else if (Integer.parseInt(deckNumber) <= 0 || Integer.parseInt(deckNumber) >= 16) {
-            result = "Deck number must be >=1 and <=15";
-        }
-        return result;
-    }
-	
-	
+		if (!isValidNumber(deckNumber)) {
+			result = "Deck number must be numeric";
+		} else if (deckNumber.length() <= 0 || deckNumber.length() >= 3) {
+			result = "Deck number must be 1 or 2 digit(s)";
+		} else if (Integer.parseInt(deckNumber) <= 0 || Integer.parseInt(deckNumber) >= 16) {
+			result = "Deck number must be >=1 and <=15";
+		}
+		return result;
+	}
+
 	private String validateUsername(String username) {
 		String result = "";
 

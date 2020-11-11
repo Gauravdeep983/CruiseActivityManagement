@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EventTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Nov 11, 2020 4:48:13 PM)</a> &gt; <a href="../../index.html" class="el_group">CruiseActivityManagement</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">CruiseActivityManagement.model</a> &gt; <span class="el_source">EventTest.java</span></div><h1>EventTest.java</h1><pre class="source lang-java linenums">package CruiseActivityManagement.model;
+
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import CruiseActivityManagement.model.Event;
+import CruiseActivityManagement.model.EventErrors;
+import CruiseActivityManagement.model.User;
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+
+@RunWith(JUnitParamsRunner.class)
+<span class="fc" id="L15">public class EventTest {</span>
+	private Event event;
+	private User user;
+	private EventErrors eventErrors;
+
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L22">		event = new Event();</span>
+<span class="fc" id="L23">		user = new User();</span>
+<span class="fc" id="L24">		eventErrors = new EventErrors();</span>
+<span class="fc" id="L25">	}</span>
+
+	@Test
+	@FileParameters(&quot;test\\CruiseActivityManagement\\model\\updateEvent.csv&quot;)
+	public void eventUpdateTest(int testcaseNo, int id, String event_name, String capacity, String location,
+			int duration, String type, String date, String startTime, String endTime, String eventCoordinator,
+			String estAttendance, String errorMsg, String eventCoordinatorError, String estAttendanceError,
+			String durationError) {
+
+<span class="fc" id="L34">		event.setEvent(id, event_name, capacity, location, duration, type, date, startTime, endTime, eventCoordinator,</span>
+<span class="fc" id="L35">				estAttendance);</span>
+<span class="fc" id="L36">		event.validateUpdateEvent(event, eventErrors);</span>
+
+<span class="fc" id="L38">		assertTrue(errorMsg.equals(eventErrors.getErrorMsg()));</span>
+<span class="fc" id="L39">		assertTrue(eventCoordinatorError.equals(eventErrors.getEventCoordinatorError()));</span>
+<span class="fc" id="L40">		assertTrue(estAttendanceError.equals(eventErrors.getEstAttendanceError()));</span>
+<span class="fc" id="L41">		assertTrue(durationError.equals(eventErrors.getDurationError()));</span>
+<span class="fc" id="L42">	}</span>
+
+	@Test
+	@FileParameters(&quot;test\\CruiseActivityManagement\\model\\reservationTest.csv&quot;)
+	public void eventReservationTest(int testcaseNo, int id, String event_name, String capacity, String location,
+			int duration, String type, String date, String startTime, String endTime, String eventCoordinator,
+			String estAttendance, String username, String password, String errorMsg, String typeError,
+			String capacityError) {
+
+<span class="fc" id="L51">		event.setEvent(id, event_name, capacity, location, duration, type, date, startTime, endTime, eventCoordinator,</span>
+<span class="fc" id="L52">				estAttendance);</span>
+<span class="fc" id="L53">		user.setUser(username, password);</span>
+<span class="fc" id="L54">		event.validateReservation(event, user, eventErrors);</span>
+
+<span class="fc" id="L56">		assertTrue(errorMsg.equals(eventErrors.getErrorMsg()));</span>
+<span class="fc" id="L57">		assertTrue(typeError.equals(eventErrors.getTypeError()));</span>
+<span class="fc" id="L58">		assertTrue(capacityError.equals(eventErrors.getCapacityError()));</span>
+<span class="fc" id="L59">	}</span>
+
+	@Test
+	@FileParameters(&quot;test\\CruiseActivityManagement\\model\\pastValidations.csv&quot;)
+	public void pastDateTest(int testcaseNo, String date, String startTime, String errorMsg, String dateError,
+			String timeError) {
+
+<span class="fc" id="L66">		event.validateDate(eventErrors, date, startTime);</span>
+
+<span class="fc" id="L68">		assertTrue(errorMsg.equals(eventErrors.getErrorMsg()));</span>
+<span class="fc" id="L69">		assertTrue(dateError.equals(eventErrors.getDateError()));</span>
+<span class="fc" id="L70">		assertTrue(timeError.equals(eventErrors.getStartTimeError()));</span>
+<span class="fc" id="L71">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Nov 11, 2020 4:48:13 PM)</div></body></html>

@@ -1,6 +1,5 @@
 package CruiseActivityManagement.Selenium;
 
-import java.util.regex.Pattern;
 import java.io.FileInputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -9,6 +8,7 @@ import java.util.logging.Logger;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -22,6 +22,7 @@ import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EventCoordinatorTest extends CAM_BusinessFunctions {
 	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
@@ -38,7 +39,7 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 		driver = new ChromeDriver();
 
 		prop = new Properties();
-//		Load Configuration file
+		// Load Configuration file
 		prop.load(new FileInputStream("./Configuration/CAM_Configuration.properties"));
 		sAppURL = prop.getProperty("sAppURL");
 		sSharedUIMapPath = prop.getProperty("SharedUIMap");

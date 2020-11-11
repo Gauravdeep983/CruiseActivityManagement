@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EventCoordinatorTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Nov 11, 2020 4:48:13 PM)</a> &gt; <a href="../../index.html" class="el_group">CruiseActivityManagement</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">CruiseActivityManagement.Selenium</a> &gt; <span class="el_source">EventCoordinatorTest.java</span></div><h1>EventCoordinatorTest.java</h1><pre class="source lang-java linenums">package CruiseActivityManagement.Selenium;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import CruiseActivityMangement.CAM_BusinessFunctions;
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+
+@RunWith(JUnitParamsRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+<span class="nc" id="L26">public class EventCoordinatorTest extends CAM_BusinessFunctions {</span>
+<span class="nc" id="L27">	private boolean acceptNextAlert = true;</span>
+<span class="nc" id="L28">	private StringBuffer verificationErrors = new StringBuffer();</span>
+	public static String sAppURL, sSharedUIMapPath;
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+<span class="nc" id="L33">		Logger.getLogger(&quot;org.openqa.selenium.remote&quot;).setLevel(Level.OFF);</span>
+<span class="nc" id="L34">	}</span>
+
+	@Before
+	public void setUp() throws Exception {
+<span class="nc" id="L38">		System.setProperty(&quot;webdriver.chrome.driver&quot;, &quot;c:/ChromeDriver/chromedriver.exe&quot;);</span>
+<span class="nc" id="L39">		driver = new ChromeDriver();</span>
+
+<span class="nc" id="L41">		prop = new Properties();</span>
+		// Load Configuration file
+<span class="nc" id="L43">		prop.load(new FileInputStream(&quot;./Configuration/CAM_Configuration.properties&quot;));</span>
+<span class="nc" id="L44">		sAppURL = prop.getProperty(&quot;sAppURL&quot;);</span>
+<span class="nc" id="L45">		sSharedUIMapPath = prop.getProperty(&quot;SharedUIMap&quot;);</span>
+
+<span class="nc" id="L47">		prop.load(new FileInputStream(sSharedUIMapPath));</span>
+<span class="nc" id="L48">		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);</span>
+<span class="nc" id="L49">	}</span>
+
+	@Test
+	@FileParameters(&quot;excel/EC_login_test.csv&quot;)
+	public void testHomepageRole(int testCaseNumber, String username, String password, String roleExpected, String date,
+			String time, String eventAssignedExpected, String errorMsg, String roleActual, String eventAssignedActual)
+			throws Exception {
+		// Landing page
+<span class="nc" id="L57">		driver.get(sAppURL);</span>
+
+		// Login as EC
+<span class="nc" id="L60">		CAM_BF_Login(driver, username, password);</span>
+
+		// Verify if redirected to Event Coordinator homepage
+		try {
+<span class="nc" id="L64">			assertEquals(roleExpected, driver.findElement(By.xpath(prop.getProperty(&quot;Lbl_ECHome_Role&quot;))).getText());</span>
+<span class="nc" id="L65">		} catch (Error e) {</span>
+<span class="nc" id="L66">			verificationErrors.append(e.toString());</span>
+		}
+		// Screenshot
+<span class="nc" id="L69">		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());</span>
+
+		// Logout
+<span class="nc" id="L72">		driver.findElement(By.id(prop.getProperty(&quot;Btn_Homepage_Logout&quot;))).click();</span>
+<span class="nc" id="L73">	}</span>
+
+	@Test
+	@FileParameters(&quot;excel/EC_no_events_assigned.csv&quot;)
+	public void testNoEventsAssigned(int testCaseNumber, String username, String password, String roleExpected,
+			String date, String time, String eventAssignedExpected, String errorMsg, String roleActual,
+			String eventAssignedActual) throws Exception {
+		// Landing page
+<span class="nc" id="L81">		driver.get(sAppURL);</span>
+
+		// Login as EC
+<span class="nc" id="L84">		CAM_BF_Login(driver, username, password);</span>
+
+		// Search using date, time
+<span class="nc" id="L87">		searchAssignedEvents(driver, date, time);</span>
+
+		// Verify error message
+		try {
+<span class="nc" id="L91">			assertEquals(errorMsg,</span>
+<span class="nc" id="L92">					driver.findElement(By.id(prop.getProperty(&quot;Lbl_EventSummaryEC_ErrorMsg&quot;))).getText());</span>
+<span class="nc" id="L93">		} catch (Error e) {</span>
+<span class="nc" id="L94">			verificationErrors.append(e.toString());</span>
+		}
+		// Screenshot
+<span class="nc" id="L97">		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());</span>
+		// Back button
+<span class="nc" id="L99">		driver.findElement(By.id(prop.getProperty(&quot;Btn_EventSummaryEC_Back&quot;))).click();</span>
+		// Logout
+<span class="nc" id="L101">		driver.findElement(By.id(prop.getProperty(&quot;Btn_Homepage_Logout&quot;))).click();</span>
+
+<span class="nc" id="L103">	}</span>
+
+	@Test
+	@FileParameters(&quot;excel/EC_verify_assigned_event.csv&quot;)
+	public void testVerifyAssignedEvent(int testCaseNumber, String username, String password, String roleExpected,
+			String date, String time, String eventAssignedExpected, String errorMsg, String roleActual,
+			String eventAssignedActual) throws Exception {
+		// Landing page
+<span class="nc" id="L111">		driver.get(sAppURL);</span>
+
+		// Login as EC
+<span class="nc" id="L114">		CAM_BF_Login(driver, username, password);</span>
+
+		// Search using date, time
+<span class="nc" id="L117">		searchAssignedEvents(driver, date, time);</span>
+
+		// Verify if assigned event can be viewed
+<span class="nc" id="L120">		driver.findElement(By.xpath(prop.getProperty(&quot;Btn_EventSummaryEC_Details&quot;))).click();</span>
+		try {
+<span class="nc" id="L122">			assertEquals(eventAssignedExpected,</span>
+<span class="nc" id="L123">					driver.findElement(By.xpath(prop.getProperty(&quot;Lbl_EventDetails_EventName&quot;))).getText());</span>
+<span class="nc" id="L124">		} catch (Error e) {</span>
+<span class="nc" id="L125">			verificationErrors.append(e.toString());</span>
+		}
+		// Screenshot
+<span class="nc" id="L128">		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());</span>
+<span class="nc" id="L129">		driver.findElement(By.id(prop.getProperty(&quot;Btn_EventDetails_Homepage&quot;))).click();</span>
+
+		// Logout
+<span class="nc" id="L132">		driver.findElement(By.id(prop.getProperty(&quot;Btn_Homepage_Logout&quot;))).click();</span>
+
+<span class="nc" id="L134">	}</span>
+
+	@After
+	public void tearDown() throws Exception {
+<span class="nc" id="L138">		driver.quit();</span>
+<span class="nc" id="L139">		String verificationErrorString = verificationErrors.toString();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (!&quot;&quot;.equals(verificationErrorString)) {</span>
+<span class="nc" id="L141">			fail(verificationErrorString);</span>
+		}
+<span class="nc" id="L143">	}</span>
+
+	private boolean isElementPresent(By by) {
+		try {
+<span class="nc" id="L147">			driver.findElement(by);</span>
+<span class="nc" id="L148">			return true;</span>
+<span class="nc" id="L149">		} catch (NoSuchElementException e) {</span>
+<span class="nc" id="L150">			return false;</span>
+		}
+	}
+
+	private boolean isAlertPresent() {
+		try {
+<span class="nc" id="L156">			driver.switchTo().alert();</span>
+<span class="nc" id="L157">			return true;</span>
+<span class="nc" id="L158">		} catch (NoAlertPresentException e) {</span>
+<span class="nc" id="L159">			return false;</span>
+		}
+	}
+
+	private String closeAlertAndGetItsText() {
+		try {
+<span class="nc" id="L165">			Alert alert = driver.switchTo().alert();</span>
+<span class="nc" id="L166">			String alertText = alert.getText();</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			if (acceptNextAlert) {</span>
+<span class="nc" id="L168">				alert.accept();</span>
+<span class="nc" id="L169">			} else {</span>
+<span class="nc" id="L170">				alert.dismiss();</span>
+			}
+<span class="nc" id="L172">			return alertText;</span>
+		} finally {
+<span class="nc" id="L174">			acceptNextAlert = true;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Nov 11, 2020 4:48:13 PM)</div></body></html>

@@ -1,7 +1,6 @@
 package CruiseActivityManagement.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,31 +9,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import CruiseActivityManagement.data.EventDAO;
 import CruiseActivityManagement.data.UserDAO;
-import CruiseActivityManagement.model.Event;
 import CruiseActivityManagement.model.User;
 import CruiseActivityManagement.model.UserErrors;
-
 
 @WebServlet("/UserController")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		doPost(request,response);
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// Get action from hidden input field
-		String action = request.getParameter("action"), url="";
+		String action = request.getParameter("action"), url = "";
 		HttpSession session = request.getSession();
 
 		if (action.equals("logout")) {
 			session.invalidate();
 			url = "/index.jsp";
 
-		// Check if action == login
+			// User login action
 		} else if (action.equals("login")) {
 			User user = new User();
 			UserErrors userErrors = new UserErrors();
@@ -42,7 +41,7 @@ public class UserController extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			user.setUsername(username);
-			user.setPassword(password);			
+			user.setPassword(password);
 			// Validate username and password
 			user.validateLogin(user, userErrors);
 			// Check if there are no errors in error array
@@ -56,7 +55,7 @@ public class UserController extends HttpServlet {
 						session.setAttribute("user", user1);
 						// redirect to homepage using role
 						String role = user1.getRole();
-						switch(role) {
+						switch (role) {
 						case "PASSENGER":
 							url = "/passengerHome.jsp";
 							break;
@@ -67,12 +66,17 @@ public class UserController extends HttpServlet {
 							url = "/eventCoordinatorHome.jsp";
 							break;
 						}
+					} else {
+						// User doesnt exist
+						userErrors.setUsernameError("User doesn't exist");
+						session.setAttribute("errorMsgs", userErrors);
+						url = "/index.jsp";
 					}
 				} catch (NullPointerException ex) {
 					// User doesnt exist
 					userErrors.setUsernameError("User doesn't exist");
 					session.setAttribute("errorMsgs", userErrors);
-					url = "/index.jsp";					
+					url = "/index.jsp";
 				}
 			} else {
 				// Show errors
@@ -80,69 +84,68 @@ public class UserController extends HttpServlet {
 				url = "/index.jsp";
 				session.removeAttribute("user");
 			}
-			
-		
-		//	Update profile
+
+			// Update profile
 		} else if (action.equals("updateProfile")) {
 			User user = new User();
 			UserErrors userErrors = new UserErrors();
 			String ogUsername = request.getParameter("ogUsername");
 			// Set user
-            user.setUser(request.getParameter("username"), request.getParameter("password"), request.getParameter("firstname"), 
-            		request.getParameter("lastname"), request.getParameter("phone"), request.getParameter("email"), 
-            		request.getParameter("room_number"), request.getParameter("deck_number"), 
-            		request.getParameter("membership_type"), "PASSENGER");
-            // Validation
-            user.validateUpdateProfile(user, userErrors);
-            // If no error persists
-            if (userErrors.getErrorMsg().equals("")) {
-            	//Update user            	
-            	User userUpdated = UserDAO.updateUser(user, ogUsername);
+			user.setUser(request.getParameter("username"), request.getParameter("password"),
+					request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("phone"),
+					request.getParameter("email"), request.getParameter("room_number"),
+					request.getParameter("deck_number"), request.getParameter("membership_type"), "PASSENGER");
+			// Validation
+			user.validateUpdateProfile(user, userErrors);
+			// If no error persists
+			if (userErrors.getErrorMsg().equals("")) {
+				// Update user
+				User userUpdated = UserDAO.updateUser(user, ogUsername);
 				session.removeAttribute("user");
 				session.removeAttribute("error");
 				session.setAttribute("user", userUpdated);
 				// Show success msg
 				session.setAttribute("msg", "Profile updated.");
 				url = "/passengerHome.jsp";
-            
-            } else {
+
+			} else {
 				// Show errors
 				session.setAttribute("error", userErrors);
 				url = "/editProfile.jsp";
-            }
-            
-		// Registration form
+			}
+
+			// Registration form
 		} else if (action.equals("register")) {
 			session.removeAttribute("error");
-            User user = new User();
-            UserErrors userErrors = new UserErrors();
-            // Set user
-            user.setUser(request.getParameter("username"), request.getParameter("password"), request.getParameter("firstname"), 
-            		request.getParameter("lastname"), request.getParameter("phone"), request.getParameter("email"), 
-            		request.getParameter("room_number"), request.getParameter("deck_number"), 
-            		request.getParameter("membership_type"), "PASSENGER");
-            // Validation 
-            user.validateRegistration(user, userErrors);
-           
-            session.setAttribute("error", userErrors);
-            if (userErrors.getErrorMsg().equals("")) {
-                UserDAO.registerUser(user);
-                session.setAttribute("message", "Registration successfull!");
-                url = "/index.jsp";
-            } else {
-                // Show errors
-                url = "/register.jsp";
-            } 
-        // Homepage for each role
+			User user = new User();
+			UserErrors userErrors = new UserErrors();
+			// Set user
+			user.setUser(request.getParameter("username"), request.getParameter("password"),
+					request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("phone"),
+					request.getParameter("email"), request.getParameter("room_number"),
+					request.getParameter("deck_number"), request.getParameter("membership_type"), "PASSENGER");
+			// Validation
+			user.validateRegistration(user, userErrors);
+
+			session.setAttribute("error", userErrors);
+			if (userErrors.getErrorMsg().equals("")) {
+				UserDAO.registerUser(user);
+				session.setAttribute("message", "Registration successfull!");
+				url = "/index.jsp";
+			} else {
+				// Show errors
+				url = "/register.jsp";
+			}
+			// Homepage for each role
 		} else if (action.equalsIgnoreCase("homepage")) {
-			User user = (User)session.getAttribute("user");
-			session.removeAttribute("msg");		
-		  	session.removeAttribute("EVENTS");
+			User user = (User) session.getAttribute("user");
+			session.removeAttribute("msg");
+			session.removeAttribute("EVENTS");
 			session.removeAttribute("RESULT");
 			session.removeAttribute("error");
-			session.removeAttribute("errorMsgs");	
-			
-			switch(user.getRole()) {
+			session.removeAttribute("errorMsgs");
+
+			switch (user.getRole()) {
 			case "PASSENGER":
 				url = "/passengerHome.jsp";
 				break;
@@ -156,10 +159,8 @@ public class UserController extends HttpServlet {
 		}
 
 		// redirects to url specified
-		getServletContext().getRequestDispatcher(url).forward(request, response);	
-		
+		getServletContext().getRequestDispatcher(url).forward(request, response);
+
 	}
-	
-	
 
 }

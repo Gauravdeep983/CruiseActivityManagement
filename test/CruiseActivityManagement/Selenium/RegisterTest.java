@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.junit.runners.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -22,6 +23,7 @@ import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RegisterTest extends CAM_BusinessFunctions {
 	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
@@ -48,14 +50,14 @@ public class RegisterTest extends CAM_BusinessFunctions {
 	}
 
 	@Test
-	@FileParameters("excel/TC02.csv")
-	public void testRegisterTC01(String testCaseNo, String username, String password, String firstName, String lastName,
+	@FileParameters("excel/Registration.csv")
+	public void testRegisterValidations(String testCaseNo, String username, String password, String firstName, String lastName,
 			String phone, String email, String roomNumber, String deckNumber, String membershipType, String role,
 			String errorMsg, String usernameError, String passwordError, String firstNameError, String lastNameError,
 			String phoneError, String emailError, String roomNumberError, String deckNumberError) throws Exception {
 		// Landing page
 		driver.get(sAppURL);
-		driver.findElement(By.id("register")).click();
+		driver.findElement(By.id(prop.getProperty("Btn_Login_Register"))).click();
 
 		// Register Page
 		CAM_BF_Register(driver, username, password, firstName, lastName, phone, email, roomNumber, deckNumber);
@@ -63,6 +65,28 @@ public class RegisterTest extends CAM_BusinessFunctions {
 		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
 		// Back to homepage
 		driver.findElement(By.linkText(prop.getProperty("Lnk_Register_Back"))).click();
+	}
+	
+	@Test
+	@FileParameters("excel/RegisterHappy.csv")
+	public void testRegisterHappy(String testCaseNo, String username, String password, String firstName, String lastName,
+			String phone, String email, String roomNumber, String deckNumber, String membershipType, String role,
+			String successMessage) throws Exception {
+		// Landing page
+		driver.get(sAppURL);
+		driver.findElement(By.id(prop.getProperty("Btn_Login_Register"))).click();
+
+		// Register Page
+		CAM_BF_Register(driver, username, password, firstName, lastName, phone, email, roomNumber, deckNumber);
+		
+		// Registration successful message verfication
+		try {
+		      assertEquals(successMessage, driver.findElement(By.id(prop.getProperty("Lbl_Login_Success"))).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		// Screenshot
+		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
 	}
 
 	@After
