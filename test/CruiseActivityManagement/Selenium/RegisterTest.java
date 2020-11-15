@@ -62,7 +62,7 @@ public class RegisterTest extends CAM_BusinessFunctions {
 		// Register Page
 		CAM_BF_Register(driver, username, password, firstName, lastName, phone, email, roomNumber, deckNumber);
 		// Screenshot
-		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
+		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName() + testCaseNo);
 		// Back to homepage
 		driver.findElement(By.linkText(prop.getProperty("Lnk_Register_Back"))).click();
 	}
@@ -86,7 +86,7 @@ public class RegisterTest extends CAM_BusinessFunctions {
 		      verificationErrors.append(e.toString());
 		    }
 		// Screenshot
-		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
+		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName() + testCaseNo);
 	}
 
 	@After
@@ -95,39 +95,6 @@ public class RegisterTest extends CAM_BusinessFunctions {
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
-		}
-	}
-
-	private boolean isElementPresent(By by) {
-		try {
-			driver.findElement(by);
-			return true;
-		} catch (NoSuchElementException e) {
-			return false;
-		}
-	}
-
-	private boolean isAlertPresent() {
-		try {
-			driver.switchTo().alert();
-			return true;
-		} catch (NoAlertPresentException e) {
-			return false;
-		}
-	}
-
-	private String closeAlertAndGetItsText() {
-		try {
-			Alert alert = driver.switchTo().alert();
-			String alertText = alert.getText();
-			if (acceptNextAlert) {
-				alert.accept();
-			} else {
-				alert.dismiss();
-			}
-			return alertText;
-		} finally {
-			acceptNextAlert = true;
 		}
 	}
 }

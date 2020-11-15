@@ -31,17 +31,18 @@ public class EventController extends HttpServlet {
 		String action = request.getParameter("action"), url = "";
 		HttpSession session = request.getSession();
 
-		// Search for events
+		// Search for available events (Passenger)
 		if (action.equalsIgnoreCase("searchEvents")) {
 			String date = request.getParameter("datepicker");
 			String time = request.getParameter("timepicker");
 			String eventType = request.getParameter("event_type");
+			Event event = new Event();
 			EventErrors err = new EventErrors();
 			// String format for database
 			time = date.concat(" ").concat(time);
 			date = date.concat(" 0:00");
 			// Validate datetime
-			// event.validateDate(err, date, time);
+			event.validateDate(err, date, time);
 			// Fetch all events based on filter
 			ArrayList<Event> EventsInDB = EventDAO.listAllEvents(date, time, eventType);
 			if (err.getErrorMsg().equals("")) {
@@ -61,6 +62,7 @@ public class EventController extends HttpServlet {
 
 			}
 
+			// View specified event (Manger function)
 		} else if (action.equalsIgnoreCase("listSpecificEvent")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			ArrayList<Event> EventInDB = new ArrayList<Event>();
@@ -69,7 +71,7 @@ public class EventController extends HttpServlet {
 			session.setAttribute("EVENTS", EventInDB);
 			url = "/viewSpecificEventManager.jsp";
 
-			// Search reserved events
+			// Search reserved events (Passenger function)
 		} else if (action.equalsIgnoreCase("searchReservedEvents")) {
 			session.removeAttribute("errorMsgs");
 			session.removeAttribute("EVENTS");
@@ -80,8 +82,6 @@ public class EventController extends HttpServlet {
 			// String format for database
 			time = date.concat(" ").concat(time);
 			date = date.concat(" 0:00");
-			// Validate datetime
-//			event.validateDate(err, date, time);
 			// Fetch all events based on filter
 			ArrayList<Event> EventsInDB = EventDAO.listReservedEventsByUsername(user.getUsername(), date, time);
 
@@ -109,7 +109,7 @@ public class EventController extends HttpServlet {
 			session.removeAttribute("EVENTS");
 			url = "/viewEventSummaryEC.jsp";
 
-			// EC Search
+			// EC Search assigned events
 		} else if (action.equalsIgnoreCase("searchAssignedEvents")) {
 			User user = (User) session.getAttribute("user");
 			String date = request.getParameter("datepicker");
@@ -153,7 +153,7 @@ public class EventController extends HttpServlet {
 			// Redirect to event details view for EC
 			url = "/EventDetails.jsp";
 
-			// Reserve event function
+			// Reserve event function (Passenger)
 		} else if (action.equalsIgnoreCase("reserveEvent")) {
 			Event event = (Event) session.getAttribute("EVENT");
 			User user = (User) session.getAttribute("user");
@@ -212,7 +212,7 @@ public class EventController extends HttpServlet {
 				url = "/listCreatedEvents.jsp";
 			}
 
-			// Redirection to Modify event page
+			// Redirection to Modify event page (Manager function)
 		} else if (action.equalsIgnoreCase("modifySpecificEvent")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			ArrayList<Event> EventInDB = new ArrayList<Event>();
@@ -224,7 +224,7 @@ public class EventController extends HttpServlet {
 			session.setAttribute("event", EventInDB.get(0));
 			url = "/editEvent.jsp";
 
-			// Modify event
+			// Modify event (Manager function)
 		} else if (action.equals("updateEvent")) {
 			Event event = new Event();
 			EventErrors eventErrors = new EventErrors();

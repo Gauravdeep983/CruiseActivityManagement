@@ -28,7 +28,7 @@
 				<option value="ATHLETIC">Athletic</option>
 			</select>
 		</p>
-		<input type="submit" value="Search" />
+		<input type="submit" value="Search" id="search_events_p" />
 	</form>
 	<a href="<c:url value='/UserController?action=homepage' />"> <input
 		type="submit" value="Back"></a>

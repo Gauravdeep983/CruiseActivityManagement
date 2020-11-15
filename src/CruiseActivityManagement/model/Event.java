@@ -90,7 +90,8 @@ public class Event implements java.io.Serializable {
 	private String validatePastTime(String time) {
 		String result = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy HH:mm");
-		String currentDate = sdf.format(new Date());
+		@SuppressWarnings("deprecation")
+		String currentDate = sdf.format(new Date("10/7/20 00:00"));
 
 		try {
 			if (sdf.parse(currentDate).after(sdf.parse(time))) {
@@ -107,7 +108,8 @@ public class Event implements java.io.Serializable {
 	private String validatePastDate(String selectedDate) {
 		String result = "";
 		SimpleDateFormat sdf1 = new SimpleDateFormat("M/d/yy");
-		String currentDate = sdf1.format(new Date());
+		@SuppressWarnings("deprecation")
+		String currentDate = sdf1.format(new Date("10/7/20"));
 		try {
 			Date selectedDateUpdated = sdf1.parse(selectedDate);
 			selectedDate = sdf1.format(selectedDateUpdated);

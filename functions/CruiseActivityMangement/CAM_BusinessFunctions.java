@@ -22,6 +22,12 @@ public class CAM_BusinessFunctions {
 		driver.findElement(By.name(prop.getProperty("Txt_Login_Username"))).sendKeys(username);
 		driver.findElement(By.name(prop.getProperty("Txt_Login_Password"))).clear();
 		driver.findElement(By.name(prop.getProperty("Txt_Login_Password"))).sendKeys(password);
+		try {
+			Thread.sleep(1_000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		driver.findElement(By.id(prop.getProperty("Btn_Login_Login"))).click();
 	}
 
@@ -43,8 +49,12 @@ public class CAM_BusinessFunctions {
 		driver.findElement(By.id(prop.getProperty("Txt_Register_RoomNumber"))).sendKeys(roomNumber);
 		driver.findElement(By.id(prop.getProperty("Txt_Register_DeckNumber"))).clear();
 		driver.findElement(By.id(prop.getProperty("Txt_Register_DeckNumber"))).sendKeys(deckNumber);
-//		new Select(driver.findElement(By.id(prop.getProperty("Lst_Register_MembershipType"))))
-//				.selectByVisibleText(membershipType);
+		try {
+			Thread.sleep(1_000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		driver.findElement(By.id(prop.getProperty("Btn_Register_Submit"))).click();
 	}
 
@@ -54,24 +64,36 @@ public class CAM_BusinessFunctions {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		// convert hidden field to text field for searching
 		js.executeScript("document.getElementById('datepicker').setAttribute('type', 'text');");
-//		driver.findElement(By.id(prop.getProperty("Txt_EventSummaryEC_Date"))).clear();
-		driver.findElement(By.id(prop.getProperty("Txt_EventSummaryEC_Date"))).sendKeys(date);
-//		driver.findElement(By.id(prop.getProperty("Txt_EventSummaryEC_Time"))).clear();
+		driver.findElement(By.id(prop.getProperty("Txt_Search_Date"))).sendKeys(date);
 		js.executeScript("document.getElementById('timepicker').setAttribute('type', 'text');");
-		driver.findElement(By.id(prop.getProperty("Txt_EventSummaryEC_Time"))).sendKeys(time);
+		driver.findElement(By.id(prop.getProperty("Txt_Search_Time"))).sendKeys(time);
+		try {
+			Thread.sleep(1_000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		driver.findElement(By.id(prop.getProperty("Btn_EventSummaryEC_Search"))).click();
+	}
+	
+	// Passenger search
+	public void search(WebDriver driver, String date, String time) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		// convert hidden field to text field for searching
+		js.executeScript("document.getElementById('datepicker').setAttribute('type', 'text');");
+		driver.findElement(By.id(prop.getProperty("Txt_Search_Date"))).sendKeys(date);
+		js.executeScript("document.getElementById('timepicker').setAttribute('type', 'text');");
+		driver.findElement(By.id(prop.getProperty("Txt_Search_Time"))).sendKeys(time);
 	}
 
 	public void takeScreenShot(WebDriver driver, String screenshotname) {
-		// Random number
-		int random_int = (int) (Math.random() * (1000 - 0 + 1) + 0);
 		// Take screenshot and save it in source object
 		File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		// Define path where Screenshots will be saved
 
 		// Copy the source file at the screenshot path
 		try {
-			FileUtils.copyFile(source, new File("./screenShots/" + screenshotname + random_int + ".png"));
+			FileUtils.copyFile(source, new File("./screenShots/" + screenshotname + ".png"));
 		} catch (IOException e1) {
 		}
 		try {

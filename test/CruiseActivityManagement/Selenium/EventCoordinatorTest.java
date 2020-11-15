@@ -24,7 +24,6 @@ import junitparams.JUnitParamsRunner;
 @RunWith(JUnitParamsRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EventCoordinatorTest extends CAM_BusinessFunctions {
-	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
 	public static String sAppURL, sSharedUIMapPath;
 
@@ -66,9 +65,10 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 			verificationErrors.append(e.toString());
 		}
 		// Screenshot
-		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
+		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName() + testCaseNumber);
 
 		// Logout
+		Thread.sleep(1_000);
 		driver.findElement(By.id(prop.getProperty("Btn_Homepage_Logout"))).click();
 	}
 
@@ -94,10 +94,12 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 			verificationErrors.append(e.toString());
 		}
 		// Screenshot
-		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
+		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName() + testCaseNumber);
 		// Back button
+		Thread.sleep(1_000);
 		driver.findElement(By.id(prop.getProperty("Btn_EventSummaryEC_Back"))).click();
 		// Logout
+		Thread.sleep(1_000);
 		driver.findElement(By.id(prop.getProperty("Btn_Homepage_Logout"))).click();
 
 	}
@@ -117,6 +119,7 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 		searchAssignedEvents(driver, date, time);
 
 		// Verify if assigned event can be viewed
+		Thread.sleep(1_000);
 		driver.findElement(By.xpath(prop.getProperty("Btn_EventSummaryEC_Details"))).click();
 		try {
 			assertEquals(eventAssignedExpected,
@@ -125,10 +128,12 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 			verificationErrors.append(e.toString());
 		}
 		// Screenshot
-		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
+		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName() + testCaseNumber);
+		Thread.sleep(1_000);
 		driver.findElement(By.id(prop.getProperty("Btn_EventDetails_Homepage"))).click();
 
 		// Logout
+		Thread.sleep(1_000);
 		driver.findElement(By.id(prop.getProperty("Btn_Homepage_Logout"))).click();
 
 	}
@@ -139,39 +144,6 @@ public class EventCoordinatorTest extends CAM_BusinessFunctions {
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
-		}
-	}
-
-	private boolean isElementPresent(By by) {
-		try {
-			driver.findElement(by);
-			return true;
-		} catch (NoSuchElementException e) {
-			return false;
-		}
-	}
-
-	private boolean isAlertPresent() {
-		try {
-			driver.switchTo().alert();
-			return true;
-		} catch (NoAlertPresentException e) {
-			return false;
-		}
-	}
-
-	private String closeAlertAndGetItsText() {
-		try {
-			Alert alert = driver.switchTo().alert();
-			String alertText = alert.getText();
-			if (acceptNextAlert) {
-				alert.accept();
-			} else {
-				alert.dismiss();
-			}
-			return alertText;
-		} finally {
-			acceptNextAlert = true;
 		}
 	}
 }

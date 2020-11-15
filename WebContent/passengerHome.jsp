@@ -12,7 +12,7 @@
 	<div class="content">
 		<table>
 			<tr>
-				<td><h1>Hello ${user.firstName}</h1></td>
+				<td><h1>Hello <c:out value='${user.firstName}' /></h1></td>
 				<td>(Passenger Homepage)</td>
 				<td><a href="<c:url value='/UserController?action=logout' />">
 						<input type="submit" value="Logout" id="logout">
@@ -28,15 +28,15 @@
 
 							<td><a
 								href="<c:url value='/EventController?action=searchEventsPassenger' />">
-									<input type="submit" value="View Available Events">
+									<input type="submit" value="View Available Events" id="available_events">
 							</a></td>
 							<td><a
 								href="<c:url value='/EventController?action=userReservedEvents' />">
-									<input type="submit" value="View Reserved Events">
+									<input type="submit" value="View Reserved Events" id="reserved_events">
 							</a></td>
 
 							<td><a href="<c:url value='/viewProfile.jsp' />"> <input
-									type="submit" value="View Profile"></a></td>
+									type="submit" value="View Profile" id="profile"></a></td>
 						</tr>
 					</table>
 				</td>
