@@ -63,7 +63,7 @@
 					<tr>
 						<td></td>
 						<td><a href="<c:url value='/editProfile.jsp' />"> <input
-								type="submit" value="Modify Profile"></a></td>
+								type="submit" value="Modify Profile" id="modify"></a></td>
 					</tr>
 
 					<tr>
@@ -73,6 +73,6 @@
 		</tr>
 	</table>
 	<a href="<c:url value='/UserController?action=homepage' />"> <input
-		type="submit" value="Back"></a>
+		type="submit" value="Back" id="back_profile"></a>
 </body>
 </html>

@@ -36,7 +36,7 @@
 
 			<tr>
 				<td>Last Name:</td>
-				<td><input type="text" name="lastname"
+				<td><input id="lastname" type="text" name="lastname"
 					value="<c:out value="${user.lastName}"/>"></input></td>
 				<td><label class="errorPane"><c:out
 							value='${error.lastNameError}' /></label></td>
@@ -44,7 +44,7 @@
 
 			<tr>
 				<td>First Name:</td>
-				<td><input name="firstname"
+				<td><input id="firstname" name="firstname"
 					value="<c:out value="${user.firstName}"/>"></input></td>
 				<td><label class="errorPane"><c:out
 							value='${error.firstNameError}' /></label></td>
@@ -52,7 +52,7 @@
 
 			<tr>
 				<td>Phone:</td>
-				<td><input name="phone" type="number"
+				<td><input id="phone" name="phone" type="text"
 					value="<c:out value="${user.phone}"/>" /></td>
 
 				<td><label class="errorPane"><c:out
@@ -71,7 +71,7 @@
 
 			<tr>
 				<td>Room Number:</td>
-				<td><input name="room_number" type="number"
+				<td><input id="room_number" name="room_number" type="text"
 					value="<c:out value="${user.roomNumber}"/>"></input></td>
 				<td><label class="errorPane"><c:out
 							value='${error.roomNumberError}' /></label></td>
@@ -79,7 +79,7 @@
 
 			<tr>
 				<td>Deck Number:</td>
-				<td><input name="deck_number" type="number"
+				<td><input id="deck_number" name="deck_number" type="text"
 					value="<c:out value="${user.deckNumber}"/>"></input></td>
 				<td><label class="errorPane"><c:out
 							value='${error.deckNumberError}' /></label></td>
@@ -102,15 +102,15 @@
 			</tr>
 
 			<tr>
-				<td><input type="submit" value="Save"
+				<td><input type="submit" value="Save" id="update"
 					onclick="if (confirm('Are you sure you want to update?')) form.action='<c:url value='/UserController?action=updateProfile'/>'; else return false;" />
 				</td>
-				<td><a href="<c:url value='/UserController?action=homepage' />">
-						<input type="submit" value="Back">
-				</a></td>
+				<td></td>
 			</tr>
 
 		</table>
-	</form>
+	</form><a href="<c:url value='/UserController?action=homepage' />">
+						<input id="back_ward" type="submit" value="Back">
+				</a>
 </body>
 </html>

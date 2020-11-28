@@ -10,6 +10,7 @@ public class UserErrors {
 	private String emailError = "";
 	private String roomNumberError = "";
 	private String deckNumberError = "";
+	private String membershipTypeError = "";
 
 	// Default constructor
 	public UserErrors() {
@@ -23,7 +24,7 @@ public class UserErrors {
 	public void setErrorMsg() {
 		if (!usernameError.equals("") || !passwordError.equals("") || !firstNameError.equals("")
 				|| !lastNameError.equals("") || !phoneError.equals("") || !emailError.equals("")
-				|| !roomNumberError.equals("") || !deckNumberError.equals("")) {
+				|| !roomNumberError.equals("") || !deckNumberError.equals("") || !membershipTypeError.equals("")) {
 			errorMsg = "Please correct the following errors";
 		}
 	}
@@ -90,6 +91,14 @@ public class UserErrors {
 
 	public void setDeckNumberError(String deckNumberError) {
 		this.deckNumberError = deckNumberError;
+	}
+	
+	public String getMembershipTypeError() {
+		return membershipTypeError;
+	}
+
+	public void setMembershipTypeError(String membershipTypeError) {
+		this.membershipTypeError = membershipTypeError;
 	}
 
 }

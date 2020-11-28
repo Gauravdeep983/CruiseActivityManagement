@@ -62,7 +62,7 @@ public class EventController extends HttpServlet {
 
 			}
 
-			// View specified event (Manger function)
+			// View specified event (Manager function)
 		} else if (action.equalsIgnoreCase("listSpecificEvent")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			ArrayList<Event> EventInDB = new ArrayList<Event>();

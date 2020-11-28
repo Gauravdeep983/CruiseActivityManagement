@@ -11,19 +11,22 @@
 <title>Search events</title>
 </head>
 <body>
-<h1>Search Available Events</h1>
-	<label class="errorPane"><c:out value='${error.errorMsg}' /></label>
+	<h1>Search Available Events</h1>
+	<label class="errorPane" id="errorMsg"><c:out
+			value='${error.errorMsg}' /></label>
 
 	<form method="post"
 		action="<c:url value='/EventController?action=searchEvents' /> ">
 		<p>
-			Date: <input type="text" id="datepicker" name="datepicker"><label class="errorPane"><c:out value='${error.dateError}' /></label>
+			Date: <input type="text" id="datepicker" name="datepicker"><label
+				class="errorPane"><c:out value='${error.dateError}' /></label>
 		</p>
 		<p>
-			Time: <input type="text" id="timepicker" name="timepicker"><label class="errorPane"><c:out value='${error.startTimeError}' /></label>
+			Time: <input type="text" id="timepicker" name="timepicker"><label
+				class="errorPane"><c:out value='${error.startTimeError}' /></label>
 		</p>
 		<p>
-			Event Type: <select name="event_type">
+			Event Type: <select name="event_type" id="event_type">
 				<option selected value="SHOW">Show</option>
 				<option value="ATHLETIC">Athletic</option>
 			</select>
@@ -31,7 +34,7 @@
 		<input type="submit" value="Search" id="search_events_p" />
 	</form>
 	<a href="<c:url value='/UserController?action=homepage' />"> <input
-		type="submit" value="Back"></a>
+		type="submit" value="Back" id="backp" /></a>
 	<hr>
 	<table border="1" class="myTable">
 		<tr class="myTableRow">
@@ -49,7 +52,8 @@
 
 				<td class="myTable20 "><c:out value="${item.event_name}" /></td>
 				<td class="myTable35 "><c:out value="${item.date}" /></td>
-				<td class="myTable20 "><c:out value="${item.startTime.substring(8)}" /></td>
+				<td class="myTable20 "><c:out
+						value="${item.startTime.substring(8)}" /></td>
 				<td class="myTable30 "><c:out value="${item.duration}" /></td>
 				<td class="myTable30 "><c:out value="${item.location}" /></td>
 				<td class="myTable30 "><c:out value="${item.estAttendance}" /></td>

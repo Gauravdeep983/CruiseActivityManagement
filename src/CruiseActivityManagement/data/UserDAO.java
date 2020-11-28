@@ -70,32 +70,31 @@ public class UserDAO {
 			}
 
 		} catch (SQLException e) {
-			return user;
 		}
 		return user;
 	}
 
-	public static User viewprofile(String username) {
-		Statement stmt = null;
-		Connection conn = null;
-		User user = new User();
-		conn = SQLConnection.getDBConnection();
-		try {
-			stmt = conn.createStatement();
-			String sql = "Select * from cruise_activity.user WHERE username =" + username + "'";
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				user.setUser(rs.getString("username"), rs.getString("password"), rs.getString("firstname"),
-						rs.getString("lastname"), rs.getString("phone"), rs.getString("email"),
-						Integer.toString(rs.getInt("room_number")), Integer.toString(rs.getInt("deck_number")), rs.getString("membership_type"),
-						rs.getString("role"));
-			}
-
-		} catch (SQLException e) {
-			return user;
-		}
-		return user;
-	}
+//	public static User viewprofile(String username) {
+//		Statement stmt = null;
+//		Connection conn = null;
+//		User user = new User();
+//		conn = SQLConnection.getDBConnection();
+//		try {
+//			stmt = conn.createStatement();
+//			String sql = "Select * from cruise_activity.user WHERE username =" + username + "'";
+//			ResultSet rs = stmt.executeQuery(sql);
+//			while (rs.next()) {
+//				user.setUser(rs.getString("username"), rs.getString("password"), rs.getString("firstname"),
+//						rs.getString("lastname"), rs.getString("phone"), rs.getString("email"),
+//						Integer.toString(rs.getInt("room_number")), Integer.toString(rs.getInt("deck_number")), rs.getString("membership_type"),
+//						rs.getString("role"));
+//			}
+//
+//		} catch (SQLException e) {
+//			return user;
+//		}
+//		return user;
+//	}
 
 	private static ArrayList<User> returnAttendingEvent(String queryString) {
 		ArrayList<User> UserInDB = new ArrayList<User>();
@@ -182,17 +181,16 @@ public class UserDAO {
 					user.getPhone(), user.getEmail(), user.getRoomNumber(), user.getDeckNumber(),
 					user.getMembershipType(), user.getRole());
 		} catch (SQLException e) {
-			e.getMessage();
 		}
 		return updatedUser;
 	}
 
-	public static ArrayList<User> passengerReservedEvents(String username) {
-		return returnAttendingEvent("SELECT e.*, u.* FROM cruise_activity.participants p\r\n"
-				+ "INNER JOIN cruise_activity.all_events e ON e.id = p.event_id\r\n"
-				+ "INNER JOIN cruise_activity.user u ON u.username = p.participant\r\n" + "WHERE p.participant = '"
-				+ username + "'");
-	}
+//	public static ArrayList<User> passengerReservedEvents(String username) {
+//		return returnAttendingEvent("SELECT e.*, u.* FROM cruise_activity.participants p\r\n"
+//				+ "INNER JOIN cruise_activity.all_events e ON e.id = p.event_id\r\n"
+//				+ "INNER JOIN cruise_activity.user u ON u.username = p.participant\r\n" + "WHERE p.participant = '"
+//				+ username + "'");
+//	}
 
 	public static ArrayList<User> listParticipantsInEvent(int event_id) {
 		return returnParticipants("SELECT participant FROM cruise_activity.participants\r\n"

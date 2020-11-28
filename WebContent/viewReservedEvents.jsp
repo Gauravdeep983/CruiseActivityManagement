@@ -18,7 +18,7 @@
 		<p>
 			Time: <input type="text" id="timepicker" name="timepicker"> <label class="errorPane"><c:out value='${error.startTimeError}' /></label>
 		</p>
-		<input type="submit" value="Search" />
+		<input type="submit" value="Search" id="searchReserved" />
 	</form>
 	<a href="<c:url value='/UserController?action=homepage' />"> <input
 		type="submit" value="Back"></a>

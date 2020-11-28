@@ -15,13 +15,10 @@
 	</div>
 
 
-	<div class="mainbar">
-		<div class="submb"></div>
-	</div>
-	<label class="errorPane"><c:out value='${errorMsg.errorMsg}' /></label>
+	<label class="errorPane" id="error_msg"><c:out value='${errorMsg.errorMsg}' /></label>
 	<ul style="list-style: none;">
-		<li class="errorPane"><c:out value='${errorMsgs.typeError}' /></li>
-		<li class="errorPane"><c:out value='${errorMsgs.capacityError}' /></li>
+		<li class="errorPane" id="type_error"><c:out value='${errorMsgs.typeError}' /></li>
+		<li class="errorPane" id="capacity_error"><c:out value='${errorMsgs.capacityError}' /></li>
 	</ul>
 	<form method="post">
 		<table border="1" class="myTable">

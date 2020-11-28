@@ -12,27 +12,32 @@
 	<div class="content">
 		<table>
 			<tr>
-				<td><h1>Hello <c:out value='${user.firstName}' /></h1></td>
+				<td><h1>
+						Hello
+						<c:out value='${user.firstName}' />
+					</h1></td>
 				<td>(Passenger Homepage)</td>
 				<td><a href="<c:url value='/UserController?action=logout' />">
 						<input type="submit" value="Logout" id="logout">
 				</a></td>
 			</tr>
 			<tr>
-				<td><label class="errorPane"><c:out value='${msg}' /></label></td>
+				<td><label class="errorPane" id="success_msg"><c:out
+							value='${msg}' /></label></td>
 			</tr>
 			<tr>
 				<td>
 					<table>
 						<tr>
-
 							<td><a
 								href="<c:url value='/EventController?action=searchEventsPassenger' />">
-									<input type="submit" value="View Available Events" id="available_events">
+									<input type="submit" value="View Available Events"
+									id="available_events">
 							</a></td>
 							<td><a
 								href="<c:url value='/EventController?action=userReservedEvents' />">
-									<input type="submit" value="View Reserved Events" id="reserved_events">
+									<input type="submit" value="View Reserved Events"
+									id="reserved_events">
 							</a></td>
 
 							<td><a href="<c:url value='/viewProfile.jsp' />"> <input
