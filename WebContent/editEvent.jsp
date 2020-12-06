@@ -15,7 +15,8 @@
 		<h1>Modify Event</h1>
 	</div>
 	<br />
-	<label class="errorPane"><c:out value='${error.errorMsg}' /></label>
+	<label class="errorPane" id="errorUpdateEvent"><c:out
+			value='${error.errorMsg}' /></label>
 	<form action="<c:url value='/EventController?action=updateEvent' />"
 		method="post">
 		<input type="hidden" name="ogId" value="<c:out value="${event.id}" />">
@@ -26,7 +27,7 @@
 					style="width: 153px; height: 27px;">
 						<option selected="<c:out value='${event.event_name}'/>"
 							value="<c:out value='${event.event_name}'/>">
-							<c:out value="<c:out value='${event.event_name}'/>" /></option>
+							<c:out value="${event.event_name}" /></option>
 						<option value="Bowling 1">Bowling 1</option>
 						<option value="Bowling 2">Bowling 2</option>
 						<option value="Movie 1">Movie 1</option>
@@ -38,13 +39,11 @@
 						<option value="Broadway Show">Broadway Show</option>
 						<option value="Planetarium">Planetarium</option>
 				</select></td>
-				<td><label class="errorPane"><c:out
-							value='${error.event_nameError}' /></label></td>
 			</tr>
 
 			<tr>
 				<td>Capacity:</td>
-				<td><input type="number" name="capacity"
+				<td><input type="text" name="capacity"
 					value="<c:out value="${event.capacity}"/>"></input></td>
 				<td><label class="errorPane"><c:out
 							value='${error.capacityError}' /></label></td>
@@ -54,8 +53,6 @@
 				<td>Location:</td>
 				<td><input name="location"
 					value="<c:out value="${event.location}"/>"></input></td>
-				<td><label class="errorPane"><c:out
-							value='${error.locationError}' /></label></td>
 			</tr>
 
 			<tr>
@@ -68,7 +65,7 @@
 						<option value="60">60</option>
 						<option value="120">120</option>
 				</select></td>
-				<td><label class="errorPane"><c:out
+				<td><label class="errorPane" id="durationErrorMsg"><c:out
 							value='${error.durationError}' /></label></td>
 			</tr>
 
@@ -124,20 +121,20 @@
 							</option>
 						</c:forEach>
 				</select>
-				<td><label class="errorPane"><c:out
+				<td><label class="errorPane" id="eventCoordinatorErrorMsg"><c:out
 							value='${error.eventCoordinatorError}' /></label></td>
 			</tr>
 
 			<tr>
 				<td>Estimate Attendance:</td>
-				<td><input name="est_attendance" type="number"
+				<td><input name="est_attendance" type="text"
 					value="<c:out value="${event.estAttendance}"/>"></input></td>
-				<td><label class="errorPane"><c:out
+				<td><label class="errorPane" id="estAttendanceErrorMsg"><c:out
 							value='${error.estAttendanceError}' /></label></td>
 			</tr>
 
 			<tr>
-				<td><input type="submit" value="Save"
+				<td><input type="submit" value="Save" id="submitEvent"
 					onclick="if (confirm('Are you sure you want to update?')) form.action='<c:url value='/EventController?action=updateEvent'/>'; else return false;" />
 				</td>
 				<td></td>
@@ -146,7 +143,7 @@
 		</table>
 	</form>
 	<a href="<c:url value='/EventController?action=listCreatedEvents' />">
-		<input type="submit" value="Back">
+		<input type="submit" value="Back" id="backUpdateEvent">
 	</a>
 	<script>
 		flatpickr("#datepicker", {
@@ -165,7 +162,7 @@
 			altInput : true,
 			altFormat : "h:i K",
 		});
-</script>
+	</script>
 
 </body>
 </html>

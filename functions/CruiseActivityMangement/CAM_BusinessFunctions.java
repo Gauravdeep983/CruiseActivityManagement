@@ -132,6 +132,19 @@ public class CAM_BusinessFunctions {
 		
 	}
 
+	// Manager functions
+	public void updateEventDate(WebDriver driver, String dateEvent, String timeFrom, String timeTo) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		// convert hidden field to text field for searching
+		js.executeScript("document.getElementById('datepicker').setAttribute('type', 'text');");
+		driver.findElement(By.id(prop.getProperty("Txt_Search_Date"))).clear();
+		driver.findElement(By.id(prop.getProperty("Txt_Search_Date"))).sendKeys(dateEvent);
+		js.executeScript("document.getElementsByName('timepickerFrom')[0].setAttribute('type', 'text');");
+		driver.findElement(By.name(prop.getProperty("Txt_UpdateEvent_TimeFrom"))).sendKeys(timeFrom);
+		js.executeScript("document.getElementsByName('timepickerTo')[0].setAttribute('type', 'text');");
+		driver.findElement(By.name(prop.getProperty("Txt_UpdateEvent_TimeTo"))).sendKeys(timeTo);
+	}
+	
 	public void takeScreenShot(WebDriver driver, String screenshotname) {
 		// Take screenshot and save it in source object
 		File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);

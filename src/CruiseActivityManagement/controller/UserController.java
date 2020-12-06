@@ -67,16 +67,8 @@ public class UserController extends HttpServlet {
 							break;
 						}
 					} else {
-						// User doesnt exist
-//						userErrors.setUsernameError("User doesn't exist");
-//						session.setAttribute("errorMsgs", userErrors);
-//						url = "/index.jsp";
 					}
 				} catch (NullPointerException ex) {
-					// User doesnt exist
-//					userErrors.setUsernameError("User doesn't exist");
-//					session.setAttribute("errorMsgs", userErrors);
-//					url = "/index.jsp";
 				}
 			} else {
 				// Show errors

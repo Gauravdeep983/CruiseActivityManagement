@@ -1,0 +1,3 @@
+1,admin,Admin@123,10/7/20,10:00,10/7/20,10:00,22:05,alan,gogo,Please correct the following errors,Duration cannot exceed close time,alan is not available at that time,Estimated attendees must be a number
+2,admin,Admin@123,10/7/20,10:00,10/7/20,17:00,18:00,sasha,0,Please correct the following errors,,,Estimated Attendance must be greater than 0
+3,admin,Admin@123,10/7/20,10:00,10/7/20,17:00,18:00,sasha,101,Please correct the following errors,,,Estimated Attendance must be <=100

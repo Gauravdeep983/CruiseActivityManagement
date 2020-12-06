@@ -56,7 +56,6 @@ public class EventDAO {
 			conn.commit();
 
 		} catch (SQLException e) {
-			e.getMessage();
 		}
 		return reserved;
 	}
@@ -88,7 +87,6 @@ public class EventDAO {
 					event.getDuration(), event.getType(), event.getDate(), event.getStartTime(), event.getEndTime(),
 					event.getEventCoordinator(), event.getEstAttendance());
 		} catch (SQLException e) {
-			e.getMessage();
 		}
 		return updatedEvent;
 	}
@@ -111,9 +109,6 @@ public class EventDAO {
 		return userListInDB.isEmpty();
 	}
 
-	public static ArrayList<Event> listAllCreatedEvents() {
-		return returnEventList("SELECT * from ALL_EVENTS ");
-	}
 
 	public static ArrayList<Event> listSpecificEvent(int id) {
 		return returnEventList("SELECT * FROM cruise_activity.all_events WHERE id = " + id);

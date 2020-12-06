@@ -56,10 +56,7 @@ public class EventController extends HttpServlet {
 					session.setAttribute("error", err);
 					url = "/searchEvents.jsp";
 				}
-			} else {// Show errors
-				session.setAttribute("error", err);
-				url = "/searchEvents.jsp";
-
+			} else {
 			}
 
 			// View specified event (Manager function)
@@ -177,8 +174,6 @@ public class EventController extends HttpServlet {
 					url = "/viewEventPassenger.jsp";
 				}
 			} catch (Exception ex) {
-				eventErrors.setErrorMsg(ex.getMessage());
-				url = "/viewEventPassenger.jsp";
 			}
 
 			// Redirects to search event (Manager function)
@@ -207,9 +202,6 @@ public class EventController extends HttpServlet {
 				session.setAttribute("EVENTS", EventsInDB);
 				url = "/listCreatedEvents.jsp";
 			} else {
-				session.removeAttribute("RESULT");
-				session.setAttribute("error", err);
-				url = "/listCreatedEvents.jsp";
 			}
 
 			// Redirection to Modify event page (Manager function)

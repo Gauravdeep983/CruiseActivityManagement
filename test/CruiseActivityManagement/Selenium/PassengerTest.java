@@ -153,15 +153,21 @@ public class PassengerTest extends CAM_BusinessFunctions {
 			} catch (Error e) {
 				verificationErrors.append(e.toString());
 			}
+			// Screenshot
+			takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName() + testCaseNo);
 			// Back to homepage
+			Thread.sleep(1_000);
 			driver.findElement(By.id(prop.getProperty("Btn_EventDetails_Back"))).click();
 		}
+
 		try {
 			assertEquals(successmsgExp, driver.findElement(By.id(prop.getProperty("Lbl_Homepage_Success"))).getText());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
 
+		// Screenshot
+		takeScreenShot(driver, new Throwable().getStackTrace()[0].getMethodName());
 		// Logout
 		Thread.sleep(1_000);
 		driver.findElement(By.id(prop.getProperty("Btn_Homepage_Logout"))).click();
@@ -272,9 +278,9 @@ public class PassengerTest extends CAM_BusinessFunctions {
 		driver.findElement(By.id(prop.getProperty("Btn_Homepage_AvailableEvents"))).click();
 		// Search using date, time
 		search(driver, date, time);
-		
+
 		Thread.sleep(1_000);
-	    driver.findElement(By.id(prop.getProperty("Btn_AvailableEvents_Search"))).click();
+		driver.findElement(By.id(prop.getProperty("Btn_AvailableEvents_Search"))).click();
 
 		try {
 			assertEquals(errorExp, driver.findElement(By.id(prop.getProperty("Lbl_AvailableEvents_Error"))).getText());

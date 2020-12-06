@@ -20,11 +20,15 @@
 
 	</div>
 
+	<br>
+	<label class="errorPane" id="success_msg"><c:out value='${msg}' /></label>
+	<br>
+
 	<form action="<c:url value='/EventController' />" method="post">
 		<input type="hidden" name="action" value="listCreatedEvents">
 		<table border="1" class="myTable">
 			<tr class="myTableRow">
-				<th class="myTable35"><input name="viewReservedEvents"
+				<th class="myTable35"><input name="viewCreatedEvents"
 					type="submit" value="View Event Summary"></th>
 			</tr>
 		</table>

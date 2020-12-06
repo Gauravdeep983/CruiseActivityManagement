@@ -74,65 +74,6 @@ public class UserDAO {
 		return user;
 	}
 
-//	public static User viewprofile(String username) {
-//		Statement stmt = null;
-//		Connection conn = null;
-//		User user = new User();
-//		conn = SQLConnection.getDBConnection();
-//		try {
-//			stmt = conn.createStatement();
-//			String sql = "Select * from cruise_activity.user WHERE username =" + username + "'";
-//			ResultSet rs = stmt.executeQuery(sql);
-//			while (rs.next()) {
-//				user.setUser(rs.getString("username"), rs.getString("password"), rs.getString("firstname"),
-//						rs.getString("lastname"), rs.getString("phone"), rs.getString("email"),
-//						Integer.toString(rs.getInt("room_number")), Integer.toString(rs.getInt("deck_number")), rs.getString("membership_type"),
-//						rs.getString("role"));
-//			}
-//
-//		} catch (SQLException e) {
-//			return user;
-//		}
-//		return user;
-//	}
-
-	private static ArrayList<User> returnAttendingEvent(String queryString) {
-		ArrayList<User> UserInDB = new ArrayList<User>();
-
-		Statement stmt = null;
-		Connection conn = SQLConnection.getDBConnection();
-		try {
-			stmt = conn.createStatement();
-			ResultSet listEvent = stmt.executeQuery(queryString);
-			while (listEvent.next()) {
-				User user = new User();
-				Event event = new Event();
-				event.setId(listEvent.getInt("id"));
-				event.setEvent_name(listEvent.getString("event_name"));
-				event.setDate(listEvent.getString("date"));
-				event.setStartTime(listEvent.getString("start_time"));
-				event.setEndTime(listEvent.getString("end_time"));
-				event.setEventCoordinator(listEvent.getString("event_coordinator"));
-				event.setEstAttendance(Integer.toString(listEvent.getInt("est_attendance")));
-				user.setUsername(listEvent.getString("username"));
-				user.setFirstName(listEvent.getString("firstname"));
-				user.setLastName(listEvent.getString("lastname"));
-				user.setPhone(listEvent.getString("phone"));
-				user.setEmail(listEvent.getString("email"));
-				user.setRoomNumber(Integer.toString(listEvent.getInt("room_number")));
-				user.setDeckNumber(Integer.toString(listEvent.getInt("deck_number")));
-				user.setMembershipType(listEvent.getString("membership_type"));
-				user.setRole(listEvent.getString("role"));
-
-				user.setEvent(event);
-
-				UserInDB.add(user);
-			}
-		} catch (SQLException e) {
-		}
-		return UserInDB;
-	}
-
 	private static ArrayList<User> returnParticipants(String queryString) {
 		ArrayList<User> UserInDB = new ArrayList<User>();
 		Statement stmt = null;
@@ -185,12 +126,6 @@ public class UserDAO {
 		return updatedUser;
 	}
 
-//	public static ArrayList<User> passengerReservedEvents(String username) {
-//		return returnAttendingEvent("SELECT e.*, u.* FROM cruise_activity.participants p\r\n"
-//				+ "INNER JOIN cruise_activity.all_events e ON e.id = p.event_id\r\n"
-//				+ "INNER JOIN cruise_activity.user u ON u.username = p.participant\r\n" + "WHERE p.participant = '"
-//				+ username + "'");
-//	}
 
 	public static ArrayList<User> listParticipantsInEvent(int event_id) {
 		return returnParticipants("SELECT participant FROM cruise_activity.participants\r\n"
